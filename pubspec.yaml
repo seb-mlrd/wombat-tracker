@@ -17,3 +17,10 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  fonts:
+    - family: Anton
+      fonts:
+        - asset: assets/fonts/Anton/Anton-Regular.ttf
+    - family: Roboto
+      fonts:
+        - asset: assets/fonts/Roboto_Condensed/RobotoCondensed-VariableFont_wght.ttf
