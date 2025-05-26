@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 
 /// Alternate primary600 or #112236
-const primaryBase = Color.fromARGB(100, 17,34,54);
-const secondaryBase = Color.fromARGB(100, 243, 233, 11);
-const tertiary100 = Color.fromARGB(100,238,241,245 );
-const quinaryBase = Color.fromARGB(100,2,2,2 );
+const primaryBase = Color.fromRGBO(17,34,54, 1);
+const secondaryBase = Color.fromRGBO(243, 233, 11, 1);
+const tertiary100 = Color.fromRGBO(238,241,245,1);
+const quinaryBase = Color.fromRGBO(2,2,2,1 );
 /// Alternate quatrenary700
-const quatrenaryBase = Color.fromARGB(100,255,254,255 );
-const primary700 = Color.fromARGB(100,3,19,28 );
-const septenary100 = Color.fromARGB(100,217,226,238 );
+const quatrenaryBase = Color.fromRGBO(255,254,255,1);
+const primary700 = Color.fromRGBO(3,19,28,1);
+const septenary100 = Color.fromRGBO(217,226,238,1);
 /// Title h2
 const title = TextStyle(
   fontSize: 60,

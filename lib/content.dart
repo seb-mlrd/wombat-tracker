@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'package:wombat_tracker/styles.dart';
 import 'screen/home.dart';
 import 'screen/community.dart';
 import 'screen/planning.dart';
@@ -27,16 +27,12 @@ class _ContentState extends State<Content> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.amber,
-        title: const Text('Wombat Tracker')
-      ),
       body: _screenList[_currentScreen],
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        iconSize: 35,
-        selectedItemColor: Colors.amber[800],
-        unselectedItemColor: Colors.black,
+        selectedItemColor: primaryBase,
+        unselectedItemColor: primaryBase,
+        backgroundColor: secondaryBase,
         currentIndex: _currentScreen,
         onTap:(index) => {
           setState(() {
@@ -44,11 +40,41 @@ class _ContentState extends State<Content> {
           })
         },
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.language), label: 'Communauté'),
-          BottomNavigationBarItem(icon: Icon(Icons.calendar_month_rounded), label: 'Planning'),
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Accueil'),
-          BottomNavigationBarItem(icon: Icon(Icons.account_circle_rounded), label: 'Profil'),
-          BottomNavigationBarItem(icon: Icon(Icons.search_rounded), label: 'Research'),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.language,
+              size:_currentScreen == 0 ?  43 : 24,
+            ),
+            label: 'Communauté',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.calendar_month_rounded,
+              size:_currentScreen == 1 ?  43 : 24,
+            ), 
+            label: 'Planning'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.home,
+              size:_currentScreen == 2 ?  43 : 24,
+            ), 
+            label: 'Accueil'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.account_circle_rounded,
+              size:_currentScreen == 3 ?  43 : 24,
+            ), 
+            label: 'Profil'
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(
+              Icons.search_rounded,
+              size:_currentScreen == 4 ?  43 : 24,
+            ),
+            label: 'Research'
+          ),
         ],
       ),
 
