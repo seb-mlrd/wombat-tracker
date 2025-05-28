@@ -57,7 +57,10 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            RedirectLink(text: "Mot de passe oublié", to: Signup()),
+            RedirectLink(
+              text: "Pas encore membre ? crée-toi un compte  ",
+              to: Signup(),
+            ),
           ],
         ),
       ),

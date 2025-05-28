@@ -77,7 +77,7 @@ class _SignupState extends State<Signup> {
                 ],
               ),
             ),
-            RedirectLink(text: "Crée-toi un compte", to: Login()),
+            RedirectLink(text: "Déjà un compte ? connecte toi", to: Login()),
           ],
         ),
       ),
