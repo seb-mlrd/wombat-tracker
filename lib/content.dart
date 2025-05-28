@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wombat_tracker/screen/login.dart';
+import 'package:wombat_tracker/screen/auth/login.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'screen/home.dart';
 import 'screen/community.dart';
@@ -21,7 +21,6 @@ class _ContentState extends State<Content> {
     Home(),
     Profil(),
     Research(),
-    Login(),
   ];
   int _currentScreen = 2;
 
@@ -67,13 +66,6 @@ class _ContentState extends State<Content> {
             icon: Icon(
               Icons.search_rounded,
               size: _currentScreen == 4 ? 43 : 24,
-            ),
-            label: 'Research',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(
-              Icons.search_rounded,
-              size: _currentScreen == 5 ? 43 : 24,
             ),
             label: 'Research',
           ),

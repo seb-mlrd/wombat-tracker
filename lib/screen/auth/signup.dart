@@ -1,27 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:wombat_tracker/screen/auth/login.dart';
 import 'package:wombat_tracker/styles.dart';
 
-import '../widget/label_form.dart';
-import '../widget/input_form.dart';
-import '../widget/wombat_banner.dart';
+import '../../widget/label_form.dart';
+import '../../widget/input_form.dart';
+import '../../widget/wombat_banner.dart';
+import '../../widget/redirect_link.dart';
 
-class Login extends StatefulWidget {
-  const Login({super.key});
+class Signup extends StatefulWidget {
+  const Signup({super.key});
 
   @override
-  State<Login> createState() => _LoginState();
+  State<Signup> createState() => _SignupState();
 }
 
-class _LoginState extends State<Login> {
+class _SignupState extends State<Signup> {
   final _formKey = GlobalKey<FormState>();
   // controller qui va nous permettre de récupérer la valeur de notre input, pour chaque champs que l'on aura on devra créer un controller
   final passwordController = TextEditingController(); //controller pour le nom
   final emailController = TextEditingController(); //controller pour l'email
-
+  final lastNameController = TextEditingController();
+  final nameController = TextEditingController();
+  final confirmPasswordController = TextEditingController();
   @override
   void dispose() {
     passwordController.dispose();
     emailController.dispose();
+    lastNameController.dispose();
+    nameController.dispose();
+    confirmPasswordController.dispose();
     super.dispose();
   }
 
@@ -29,11 +36,11 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: tertiary100,
-      body: Center(
+      body: SingleChildScrollView(
         child: Column(
           children: [
             WombatBanner(),
-            Text("Connexion", style: title.copyWith(color: primaryBase)),
+            Text("Inscription", style: title.copyWith(color: primaryBase)),
 
             Form(
               key: _formKey,
@@ -45,23 +52,39 @@ class _LoginState extends State<Login> {
                     nameController: emailController,
                     typeInput: "Email",
                   ),
+
+                  LabelForm(labelName: "Nom"),
+                  InputForm(nameController: nameController, typeInput: "Nom"),
+
+                  LabelForm(labelName: "Prenom"),
+                  InputForm(
+                    nameController: lastNameController,
+                    typeInput: "Prenom",
+                  ),
+
                   LabelForm(labelName: "Mot de passe"),
                   InputForm(
                     nameController: passwordController,
-                    typeInput: "Password",
+                    typeInput: "Mot de passe",
                   ),
-                  buttonLogin(context),
+
+                  LabelForm(labelName: "Confirmation du mot de passe"),
+                  InputForm(
+                    nameController: confirmPasswordController,
+                    typeInput: "Confirmation du mot de passe",
+                  ),
+                  buttonSignup(context),
                 ],
               ),
             ),
-            Text("Mot de passe oublié."),
+            RedirectLink(text: "Crée-toi un compte", to: Login()),
           ],
         ),
       ),
     );
   }
 
-  Container buttonLogin(BuildContext context) {
+  Container buttonSignup(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(16),
       child: Align(
@@ -86,7 +109,7 @@ class _LoginState extends State<Login> {
             }
           },
           child: Text(
-            "connexion",
+            "Inscription",
             style: subSubTitle.copyWith(color: secondaryBase),
           ),
         ),

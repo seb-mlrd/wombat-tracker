@@ -24,8 +24,10 @@ class _InputFormState extends State<InputForm> {
 
   @override
   Widget build(BuildContext context) {
-    final isPassword = widget.typeInput.toLowerCase() == "password";
-    final isEmail = widget.typeInput.toLowerCase() == "email";
+    final type = widget.typeInput;
+    final isPassword =
+        type == "Mot de passe" || type == "Confirmation du mot de passe";
+    final isEmail = type == "Email";
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 41, vertical: 4),
