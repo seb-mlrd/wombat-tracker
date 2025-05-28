@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wombat_tracker/main.dart';
 import 'package:wombat_tracker/screen/auth/login.dart';
 import 'package:wombat_tracker/styles.dart';
 
@@ -94,18 +96,54 @@ class _SignupState extends State<Signup> {
             backgroundColor: primaryBase,
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           ),
-          onPressed: () {
+          onPressed: () async {
             if (_formKey.currentState!.validate()) {
               final confPassword = passwordController.text;
               final confEmail = emailController.text;
+              final confLastName = lastNameController.text;
+              final confName = nameController.text;
+              final confPasswordConfirm = confirmPasswordController.text;
               ScaffoldMessenger.of(
                 context,
               ).showSnackBar(const SnackBar(content: Text("Envoi en cours !")));
               FocusScope.of(context).requestFocus(
                 FocusNode(),
               ); // pour retirer le clavier au moment d'envoyer les informations
-              print(confEmail);
-              print(confPassword);
+
+              if (confPassword != confPasswordConfirm) {
+                // Affiche une erreur
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Les mots de passe ne correspondent pas."),
+                    backgroundColor: senaryBase,
+                  ),
+                );
+                return;
+              }
+              try {
+                // utilisation de supabase pour l'inscription
+                final AuthResponse res = await supabase.auth.signUp(
+                  email: confEmail,
+                  password: confPassword,
+                  // enregistrement des informations de l'utilisateur dans la table Profil
+                  data: {'firstName': confName, 'lastName': confLastName},
+                );
+
+                final Session? session = res.session;
+                final User? user = res.user;
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Inscription réussie."),
+                    backgroundColor: primary200,
+                  ),
+                );
+              } catch (e) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
+                print(e);
+              }
             }
           },
           child: Text(

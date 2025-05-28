@@ -35,10 +35,15 @@ class _InputFormState extends State<InputForm> {
         controller: widget.nameController,
         obscureText: isPassword ? !passwordVisible : false,
         validator: (value) {
-          if (value == null || value.isEmpty) {
+          final isValid = RegExp(
+            r'(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}',
+          ).hasMatch(value!);
+          if (value.isEmpty) {
             return 'Le champs ${widget.typeInput} est vide';
           } else if (isEmail && !regex.hasMatch(value)) {
             return 'Le champs ${widget.typeInput} n\'est pas un email valide';
+          } else if (isPassword && !isValid) {
+            return '8 caractères minimum et caractères spéciaux.';
           }
           return null;
         },

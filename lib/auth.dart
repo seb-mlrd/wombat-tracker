@@ -18,34 +18,6 @@ class _AuthState extends State<Auth> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: _screenList[_currentScreen],
-      // bottomNavigationBar: BottomNavigationBar(
-      //   type: BottomNavigationBarType.fixed,
-      //   selectedItemColor: primaryBase,
-      //   unselectedItemColor: primaryBase,
-      //   backgroundColor: secondaryBase,
-      //   currentIndex: _currentScreen,
-      //   onTap: (index) => {
-      //     setState(() {
-      //       _currentScreen = index;
-      //     }),
-      //   },
-      //   items: [
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.search_rounded,
-      //         size: _currentScreen == 0 ? 43 : 24,
-      //       ),
-      //       label: 'Signup',
-      //     ),
-      //     BottomNavigationBarItem(
-      //       icon: Icon(
-      //         Icons.search_rounded,
-      //         size: _currentScreen == 1 ? 43 : 24,
-      //       ),
-      //       label: 'Login',
-      //     ),
-      //   ],
-      // ),
     );
   }
 }
