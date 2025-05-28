@@ -86,7 +86,7 @@ class _LoginState extends State<Login> {
             }
           },
           child: Text(
-            "Envoyer",
+            "connexion",
             style: subSubTitle.copyWith(color: secondaryBase),
           ),
         ),
