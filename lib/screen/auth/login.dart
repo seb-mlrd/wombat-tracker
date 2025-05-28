@@ -58,7 +58,7 @@ class _LoginState extends State<Login> {
               ),
             ),
             RedirectLink(
-              text: "Pas encore membre ? crée-toi un compte  ",
+              text: "Pas encore membre ? crée-toi un compte",
               to: Signup(),
             ),
           ],
