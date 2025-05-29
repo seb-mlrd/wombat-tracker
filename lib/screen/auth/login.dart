@@ -48,12 +48,14 @@ class _LoginState extends State<Login> {
                 children: [
                   LabelForm(labelName: "Email"),
                   InputForm(
+                    key: Key("inputEmail"),
                     nameController: emailController,
                     typeInput: "Email",
                   ),
 
                   LabelForm(labelName: "Mot de passe"),
                   InputForm(
+                    key: Key("inputPassword"),
                     nameController: passwordController,
                     typeInput: "Mot de passe",
                   ),
@@ -74,6 +76,7 @@ class _LoginState extends State<Login> {
   Container buttonLogin(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(16),
+      key: Key("loginButton"),
       child: Align(
         alignment: Alignment.center,
         child: ElevatedButton(

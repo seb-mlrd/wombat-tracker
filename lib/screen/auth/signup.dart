@@ -51,27 +51,31 @@ class _SignupState extends State<Signup> {
                 children: [
                   LabelForm(labelName: "Email"),
                   InputForm(
+                    key: Key('inputEmail'),
                     nameController: emailController,
                     typeInput: "Email",
                   ),
 
                   LabelForm(labelName: "Nom"),
-                  InputForm(nameController: nameController, typeInput: "Nom"),
+                  InputForm(key: Key('inputName'), nameController: nameController, typeInput: "Nom"),
 
                   LabelForm(labelName: "Prenom"),
                   InputForm(
+                    key: Key('inputLastName'),
                     nameController: lastNameController,
                     typeInput: "Prenom",
                   ),
 
                   LabelForm(labelName: "Mot de passe"),
                   InputForm(
+                    key: Key("inputPassword"),
                     nameController: passwordController,
                     typeInput: "Mot de passe",
                   ),
 
                   LabelForm(labelName: "Confirmation du mot de passe"),
                   InputForm(
+                    key: Key("inputConfirmPassword"),
                     nameController: confirmPasswordController,
                     typeInput: "Confirmation du mot de passe",
                   ),
@@ -89,6 +93,7 @@ class _SignupState extends State<Signup> {
   Container buttonSignup(BuildContext context) {
     return Container(
       margin: EdgeInsets.all(16),
+      key: Key("signUpButton"),
       child: Align(
         alignment: Alignment.center,
         child: ElevatedButton(
