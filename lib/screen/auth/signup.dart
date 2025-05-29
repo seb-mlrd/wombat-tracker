@@ -103,9 +103,7 @@ class _SignupState extends State<Signup> {
               final confLastName = lastNameController.text;
               final confName = nameController.text;
               final confPasswordConfirm = confirmPasswordController.text;
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text("Envoi en cours !")));
+
               FocusScope.of(context).requestFocus(
                 FocusNode(),
               ); // pour retirer le clavier au moment d'envoyer les informations
@@ -142,7 +140,6 @@ class _SignupState extends State<Signup> {
                 ScaffoldMessenger.of(
                   context,
                 ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
-                print(e);
               }
             }
           },

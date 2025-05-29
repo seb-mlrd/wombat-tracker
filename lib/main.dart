@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wombat_tracker/auth.dart';
-import 'package:wombat_tracker/content.dart';
+// import 'package:wombat_tracker/auth.dart';
+// import 'package:wombat_tracker/content.dart';
+import 'package:wombat_tracker/screen/auth/is_auth.dart';
 // import 'package:wombat_tracker/styles.dart';
 import 'secret/supabase_secret_key.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -21,9 +22,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      // home: Scaffold(body: Center(child: Content())),
-      home: Scaffold(body: Center(child: Auth())),
-    );
+    return MaterialApp(home: IsAuth(supabase: supabase));
   }
 }

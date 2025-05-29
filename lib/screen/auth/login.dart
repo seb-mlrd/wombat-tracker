@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:wombat_tracker/screen/auth/signup.dart';
 import 'package:wombat_tracker/styles.dart';
 
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'package:wombat_tracker/main.dart';
+
 import '../../widget/label_form.dart';
 import '../../widget/input_form.dart';
 import '../../widget/wombat_banner.dart';
@@ -77,18 +81,37 @@ class _LoginState extends State<Login> {
             backgroundColor: primaryBase,
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           ),
-          onPressed: () {
+          onPressed: () async {
             if (_formKey.currentState!.validate()) {
               final confPassword = passwordController.text;
               final confEmail = emailController.text;
-              ScaffoldMessenger.of(
-                context,
-              ).showSnackBar(const SnackBar(content: Text("Envoi en cours !")));
+
               FocusScope.of(context).requestFocus(
                 FocusNode(),
               ); // pour retirer le clavier au moment d'envoyer les informations
-              print(confEmail);
-              print(confPassword);
+
+              try {
+                // utilisation de supabase pour l'inscription
+                final AuthResponse res = await supabase.auth.signInWithPassword(
+                  email: confEmail,
+                  password: confPassword,
+                  // enregistrement des informations de l'utilisateur dans la table Profil
+                );
+
+                final Session? session = res.session;
+                final User? user = res.user;
+
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Connexion réussie."),
+                    backgroundColor: primary200,
+                  ),
+                );
+              } catch (e) {
+                ScaffoldMessenger.of(
+                  context,
+                ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
+              }
             }
           },
           child: Text(
