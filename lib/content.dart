@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:wombat_tracker/screen/auth/login.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wombat_tracker/styles.dart';
+import 'package:wombat_tracker/utils/manage_user.dart';
 import 'screen/home.dart';
 import 'screen/community.dart';
 import 'screen/planning.dart';
@@ -15,13 +16,57 @@ class Content extends StatefulWidget {
 }
 
 class _ContentState extends State<Content> {
-  final List<Widget> _screenList = const [
-    Community(),
-    Planning(),
-    Home(),
-    Profil(),
-    Research(),
-  ];
+  // final SupabaseClient supabaseClient = Supabase.instance.client;
+  // final User? currentUser = supabase.auth.currentUser;
+  final User? currentUser = ManageUser.currentUser;
+  List<dynamic> profils = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchProfil();
+
+    _screenList = [
+      const Community(),
+      const Planning(),
+      const Home(),
+      Profil(user: currentUser, profils: profils),
+      const Research(),
+    ];
+  }
+
+  Future<void> fetchProfil() async {
+    if (currentUser == null) return;
+    try {
+      // final data = await ManageUser.getProfil();
+      // print("data : $data");
+      // final response = await supabaseClient
+      //     .from('profil')
+      //     .select('*')
+      //     .eq('userUuid', currentUser!.id)
+      //     .single();
+      // final response = await supabaseClient
+      //     .from('profil')
+      //     .select('*')
+      //     .eq('userUuid', currentUser!.id)
+      //     .single();
+      setState(() async {
+        profils = await ManageUser.getProfil();
+        _screenList = [
+          const Community(),
+          const Planning(),
+          const Home(),
+          Profil(user: currentUser, profils: profils),
+          const Research(),
+        ];
+      });
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  late List<Widget> _screenList;
+
   int _currentScreen = 2;
 
   @override

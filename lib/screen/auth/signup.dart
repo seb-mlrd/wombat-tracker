@@ -3,6 +3,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wombat_tracker/main.dart';
 import 'package:wombat_tracker/screen/auth/login.dart';
 import 'package:wombat_tracker/styles.dart';
+import 'package:wombat_tracker/utils/manage_user.dart';
 
 import '../../widget/label_form.dart';
 import '../../widget/input_form.dart';
@@ -57,7 +58,11 @@ class _SignupState extends State<Signup> {
                   ),
 
                   LabelForm(labelName: "Nom"),
-                  InputForm(key: Key('inputName'), nameController: nameController, typeInput: "Nom"),
+                  InputForm(
+                    key: Key('inputName'),
+                    nameController: nameController,
+                    typeInput: "Nom",
+                  ),
 
                   LabelForm(labelName: "Prenom"),
                   InputForm(
@@ -125,15 +130,13 @@ class _SignupState extends State<Signup> {
               }
               try {
                 // utilisation de supabase pour l'inscription
-                final AuthResponse res = await supabase.auth.signUp(
-                  email: confEmail,
-                  password: confPassword,
-                  // enregistrement des informations de l'utilisateur dans la table Profil
-                  data: {'firstName': confName, 'lastName': confLastName},
+                await ManageUser.createUser(
+                  confEmail,
+                  confPassword,
+                  confName,
+                  confLastName,
                 );
 
-                final Session? session = res.session;
-                final User? user = res.user;
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

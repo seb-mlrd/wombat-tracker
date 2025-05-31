@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wombat_tracker/screen/auth/login.dart';
 import 'package:wombat_tracker/screen/auth/signup.dart';
-import 'package:wombat_tracker/styles.dart';
 
 class Auth extends StatefulWidget {
   const Auth({super.key});
@@ -16,8 +15,6 @@ class _AuthState extends State<Auth> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screenList[_currentScreen],
-    );
+    return Scaffold(body: _screenList[_currentScreen]);
   }
 }
