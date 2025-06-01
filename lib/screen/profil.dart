@@ -14,6 +14,7 @@ import 'package:wombat_tracker/widget/Avatar.dart';
 import '../widget/profil/name_user.dart';
 import '../widget/profil/number_stick.dart';
 import '../widget/profil/user_bio.dart';
+import '../widget/profil/label_stat.dart';
 
 class Profil extends StatefulWidget {
   final User? user;
@@ -59,7 +60,6 @@ class _ProfilState extends State<Profil> {
       backgroundColor: primaryBase,
 
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(10),
         child: Center(
           child: Column(
             children: [
@@ -68,44 +68,16 @@ class _ProfilState extends State<Profil> {
               Avatar(picture: "img/avatar.png"),
               SizedBox(height: 16),
 
-              Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  if (widget.profils.isNotEmpty)
-                    NameUser(
-                      name: widget.profils[0]["firstName"].toString(),
-                      lastName: widget.profils[0]["lastName"].toString(),
-                    ),
-                  SizedBox(width: 18),
-                  SizedBox(
-                    height: 50,
-                    child: const VerticalDivider(
-                      thickness: 2,
-                      color: secondaryBase,
-                    ),
-                  ),
-                  SizedBox(width: 18),
-                  if (widget.profils.isNotEmpty)
-                    NumberStick(nbStick: widget.profils[0]["nbrStick"]),
-                ],
-              ),
+              infoUser(),
 
               SizedBox(height: 16),
               if (widget.profils.isNotEmpty)
-                UserBio(
-                  bio: widget.profils[0]["bio"] ?? "Aucune bio",
-                  // "Juste un humain qui poursuit ses rêves un pas à la fois - de préférence en portant de jolies chaussures de course ! 🏃‍♂️💨 #RunLaughRepeat #CardioComedian",
-                ),
+                UserBio(bio: widget.profils[0]["bio"] ?? "Aucune bio"),
+
               Container(
                 width: double.infinity,
                 margin: EdgeInsets.symmetric(vertical: 16),
-                decoration: BoxDecoration(
-                  color: tertiary100,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(32),
-                    topRight: Radius.circular(32),
-                  ),
-                ),
+                decoration: decorationMainContainerStat(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -120,13 +92,109 @@ class _ProfilState extends State<Profil> {
                         style: subTitle.copyWith(color: quinaryBase),
                       ),
                     ),
+                    containerBestStat(),
+                    SizedBox(height: 16),
+                    containerFriends(),
+                    logOut(context),
                   ],
                 ),
               ),
-              logOut(context),
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  BoxDecoration decorationMainContainerStat() {
+    return BoxDecoration(
+      color: tertiary100,
+      borderRadius: BorderRadius.only(
+        topLeft: Radius.circular(32),
+        topRight: Radius.circular(32),
+      ),
+    );
+  }
+
+  Container containerFriends() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 48),
+      padding: EdgeInsets.symmetric(vertical: 24),
+      width: double.infinity,
+      height: 300,
+      decoration: boxDecorationCardProfil(),
+      child: listFriends(),
+    );
+  }
+
+  Center listFriends() {
+    return Center(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text("Aucun ami", style: bodyTextMedium.copyWith(color: tertiary100)),
+        ],
+      ),
+    );
+  }
+
+  Row infoUser() {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (widget.profils.isNotEmpty)
+          NameUser(
+            name: widget.profils[0]["firstName"].toString(),
+            lastName: widget.profils[0]["lastName"].toString(),
+          ),
+        SizedBox(width: 18),
+        SizedBox(
+          height: 50,
+          child: const VerticalDivider(thickness: 2, color: secondaryBase),
+        ),
+        SizedBox(width: 18),
+        if (widget.profils.isNotEmpty)
+          NumberStick(nbStick: widget.profils[0]["nbrStick"]),
+      ],
+    );
+  }
+
+  Container containerBestStat() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 48),
+      padding: EdgeInsets.symmetric(vertical: 24),
+      width: double.infinity,
+      decoration: boxDecorationCardProfil(),
+      child: cardStat(),
+    );
+  }
+
+  BoxDecoration boxDecorationCardProfil() {
+    return BoxDecoration(
+      color: primaryBase,
+      borderRadius: BorderRadius.circular(16),
+    );
+  }
+
+  Center cardStat() {
+    return Center(
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          LabelStat(pictureLink: "img/picto/time.png", textStat: "--:--:--"),
+          SizedBox(
+            height: 12,
+            child: VerticalDivider(thickness: 1, color: secondaryBase),
+          ),
+          LabelStat(pictureLink: 'img/picto/distance.png', textStat: "-- km"),
+          SizedBox(
+            height: 12,
+            child: VerticalDivider(thickness: 1, color: secondaryBase),
+          ),
+          LabelStat(pictureLink: 'img/picto/speed.png', textStat: "-- km/h"),
+        ],
       ),
     );
   }
@@ -136,6 +204,7 @@ class _ProfilState extends State<Profil> {
       onPressed: () async {
         try {
           await supabase.auth.signOut();
+          if (!mounted) return;
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text("Déconnexion réussie."),

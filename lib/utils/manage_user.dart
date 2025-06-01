@@ -3,7 +3,7 @@ import '../main.dart';
 
 class ManageUser {
   static final SupabaseClient supabaseClient = Supabase.instance.client;
-  static final User? currentUser = supabase.auth.currentUser;
+  static User? get currentUser => supabase.auth.currentUser;
 
   // création d'un utiliateur
   static Future<void> createUser(
@@ -23,15 +23,13 @@ class ManageUser {
     final User? user = res.user;
   }
 
-  static Future<List> getProfil() async{
+  static Future<List> getProfil() async {
     final response = await supabaseClient
-      .from('profil')
-      .select('*')
-      .eq('userUuid', currentUser!.id)
-      .single();
+        .from('profil')
+        .select('*')
+        .eq('userUuid', currentUser!.id)
+        .single();
 
-    return [response]; 
+    return [response];
   }
-
-
 }
