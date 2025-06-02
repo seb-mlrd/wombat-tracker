@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:wombat_tracker/main.dart';
+
 import 'package:wombat_tracker/screen/auth/login.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
@@ -136,7 +135,6 @@ class _SignupState extends State<Signup> {
                   confName,
                   confLastName,
                 );
-
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

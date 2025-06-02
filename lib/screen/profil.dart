@@ -8,9 +8,11 @@ import 'package:wombat_tracker/main.dart';
 
 // style
 import 'package:wombat_tracker/styles.dart';
+import 'package:wombat_tracker/utils/auth_services.dart';
 
 // widget
 import 'package:wombat_tracker/widget/Avatar.dart';
+import 'package:wombat_tracker/widget/button_cta.dart';
 import '../widget/profil/name_user.dart';
 import '../widget/profil/number_stick.dart';
 import '../widget/profil/user_bio.dart';
@@ -95,7 +97,32 @@ class _ProfilState extends State<Profil> {
                     containerBestStat(),
                     SizedBox(height: 16),
                     containerFriends(),
-                    logOut(context),
+                    // logOut(context),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        ButtonCta(
+                          keyButton: "Déconnexion",
+                          labelInput: "Déconnexion",
+                          functionCalBack: () async {
+                            await AuthServices.logout(context);
+                          },
+                          colorButton: senaryBase,
+                          colorLabelbutton: tertiary100,
+                          buildContext: context,
+                        ),
+                        ButtonCta(
+                          keyButton: "Modifier",
+                          labelInput: "Modifier",
+                          functionCalBack: () async {
+                            print("passwordController.text");
+                          },
+                          colorButton: primary200,
+                          colorLabelbutton: tertiary100,
+                          buildContext: context,
+                        ),
+                      ],
+                    ),
                   ],
                 ),
               ),
@@ -199,25 +226,25 @@ class _ProfilState extends State<Profil> {
     );
   }
 
-  ElevatedButton logOut(BuildContext context) {
-    return ElevatedButton(
-      onPressed: () async {
-        try {
-          await supabase.auth.signOut();
-          if (!mounted) return;
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text("Déconnexion réussie."),
-              backgroundColor: primary200,
-            ),
-          );
-        } catch (e) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
-        }
-      },
-      child: Text("Déconnecter"),
-    );
-  }
+  // ElevatedButton logOut(BuildContext context) {
+  //   return ElevatedButton(
+  //     onPressed: () async {
+  //       try {
+  //         await supabase.auth.signOut();
+  //         if (!mounted) return;
+  //         ScaffoldMessenger.of(context).showSnackBar(
+  //           const SnackBar(
+  //             content: Text("Déconnexion réussie."),
+  //             backgroundColor: primary200,
+  //           ),
+  //         );
+  //       } catch (e) {
+  //         ScaffoldMessenger.of(
+  //           context,
+  //         ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
+  //       }
+  //     },
+  //     child: Text("Déconnecter"),
+  //   );
+  // }
 }
