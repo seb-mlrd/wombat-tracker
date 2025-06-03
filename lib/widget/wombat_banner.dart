@@ -12,7 +12,7 @@ class WombatBanner extends StatelessWidget {
       margin: EdgeInsets.only(bottom: 16),
       padding: EdgeInsets.only(top: 16, bottom: 16),
       decoration: BoxDecoration(color: primaryBase),
-      // child: Image.asset('img/logo.png', fit: BoxFit.contain),
+      child: Image.asset('assets/img/logo.png', fit: BoxFit.contain),
     );
   }
 }

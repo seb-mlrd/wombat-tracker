@@ -67,7 +67,7 @@ class _ProfilState extends State<Profil> {
             children: [
               Text('Profil', style: subTitle.copyWith(color: tertiary100)),
               SizedBox(height: 16),
-              Avatar(picture: "img/avatar.png"),
+              Avatar(picture: "assets/img/avatar.png"),
               SizedBox(height: 16),
 
               infoUser(),
@@ -210,17 +210,17 @@ class _ProfilState extends State<Profil> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          LabelStat(pictureLink: "img/picto/time.png", textStat: "--:--:--"),
+          LabelStat(pictureLink: "assets/img/time.png", textStat: "--:--:--"),
           SizedBox(
             height: 12,
             child: VerticalDivider(thickness: 1, color: secondaryBase),
           ),
-          LabelStat(pictureLink: 'img/picto/distance.png', textStat: "-- km"),
+          LabelStat(pictureLink: 'assets/img/distance.png', textStat: "-- km"),
           SizedBox(
             height: 12,
             child: VerticalDivider(thickness: 1, color: secondaryBase),
           ),
-          LabelStat(pictureLink: 'img/picto/speed.png', textStat: "-- km/h"),
+          LabelStat(pictureLink: 'assets/img/speed.png', textStat: "-- km/h"),
         ],
       ),
     );
