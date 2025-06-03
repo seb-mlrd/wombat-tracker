@@ -7,6 +7,7 @@ import 'secret/supabase_secret_key.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {
+  
   await Supabase.initialize(
     url: "${secretKey["SUPABASE_URL"]}",
     anonKey: "${secretKey["SUPABASE_ANON_KEY"]}",
