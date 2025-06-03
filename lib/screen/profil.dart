@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // file
-import 'package:wombat_tracker/main.dart';
+// import 'package:wombat_tracker/main.dart';
 
 // style
 import 'package:wombat_tracker/styles.dart';

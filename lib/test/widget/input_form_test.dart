@@ -9,7 +9,7 @@ void main() {
       final inputEmail = find.byKey(ValueKey("inputEmail"));
       final loginButton = find.byKey(ValueKey("loginButton"));
 
-      await tester.pumpWidget(MaterialApp(home: Login()));
+      await tester.pumpWidget(MaterialApp(home: Login(onSwitch: () {})));
       await tester.enterText(inputEmail, "");
       await tester.tap(loginButton);
 
@@ -23,7 +23,7 @@ void main() {
       final inputPassword = find.byKey(ValueKey("inputPassword"));
       final loginButton = find.byKey(ValueKey("loginButton"));
 
-      await tester.pumpWidget(MaterialApp(home: Login()));
+      await tester.pumpWidget(MaterialApp(home: Login(onSwitch: () {})));
       await tester.enterText(inputPassword, "");
       await tester.tap(loginButton);
 
@@ -37,7 +37,7 @@ void main() {
       final inputPassword = find.byKey(ValueKey("inputPassword"));
       final iconEye = find.byKey(ValueKey("iconEye"));
 
-      await tester.pumpWidget(MaterialApp(home: Login()));
+      await tester.pumpWidget(MaterialApp(home: Login(onSwitch: () {})));
       await tester.enterText(inputPassword, "mot de passs ici");
       await tester.tap(iconEye);
 
@@ -49,7 +49,7 @@ void main() {
     testWidgets("Cacher le mot de passe", (WidgetTester tester) async {
       final inputPassword = find.byKey(ValueKey("inputPassword"));
 
-      await tester.pumpWidget(MaterialApp(home: Login()));
+      await tester.pumpWidget(MaterialApp(home: Login(onSwitch: () {})));
       await tester.enterText(inputPassword, "mot de passs ici");
 
       await tester.pump();
@@ -69,7 +69,7 @@ void main() {
         final inputLastName = find.byKey(ValueKey("inputLastName"));
         final signupButton = find.byKey(ValueKey("signUpButton"));
 
-        await tester.pumpWidget(MaterialApp(home: Signup()));
+        await tester.pumpWidget(MaterialApp(home: Signup(onSwitch: () {})));
 
         await tester.enterText(inputEmail, "test@test.fr");
         await tester.enterText(inputName, "Jean");

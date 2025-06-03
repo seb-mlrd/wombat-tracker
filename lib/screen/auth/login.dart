@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:wombat_tracker/screen/auth/signup.dart';
 import 'package:wombat_tracker/styles.dart';
 
-import 'package:supabase_flutter/supabase_flutter.dart';
+// import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:wombat_tracker/main.dart';
 
 import '../../widget/label_form.dart';
 import '../../widget/input_form.dart';
 import '../../widget/wombat_banner.dart';
-import '../../widget/redirect_link.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  final VoidCallback onSwitch;
+
+  const Login({super.key, required this.onSwitch});
 
   @override
   State<Login> createState() => _LoginState();
@@ -23,7 +23,6 @@ class _LoginState extends State<Login> {
   // controller qui va nous permettre de récupérer la valeur de notre input, pour chaque champs que l'on aura on devra créer un controller
   final passwordController = TextEditingController(); //controller pour le nom
   final emailController = TextEditingController(); //controller pour l'email
-
   @override
   void dispose() {
     passwordController.dispose();
@@ -63,9 +62,13 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            RedirectLink(
-              text: "Pas encore membre ? crée-toi un compte",
-              to: Signup(),
+            // RedirectLink(
+            //   text: "Pas encore membre ? crée-toi un compte",
+            //   to: Signup(),
+            // ),
+            TextButton(
+              onPressed: widget.onSwitch,
+              child: const Text("Pas encore membre ? crée-toi un compte"),
             ),
           ],
         ),
@@ -95,14 +98,15 @@ class _LoginState extends State<Login> {
 
               try {
                 // utilisation de supabase pour l'inscription
-                final AuthResponse res = await supabase.auth.signInWithPassword(
+                // final AuthResponse res = await supabase.auth.signInWithPassword(
+                await supabase.auth.signInWithPassword(
                   email: confEmail,
                   password: confPassword,
                   // enregistrement des informations de l'utilisateur dans la table Profil
                 );
 
-                final Session? session = res.session;
-                final User? user = res.user;
+                // final Session? session = res.session;
+                // final User? user = res.user;
 
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(

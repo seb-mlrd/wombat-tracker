@@ -29,7 +29,7 @@ class _IsAuthState extends State<IsAuth> {
   @override
   Widget build(BuildContext context) {
     if (user == null) {
-      return const Scaffold(body: Center(child: Auth()));
+      return Scaffold(body: Center(child: Auth()));
     } else {
       return const Scaffold(body: Center(child: Content()));
     }

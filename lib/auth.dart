@@ -10,11 +10,27 @@ class Auth extends StatefulWidget {
 }
 
 class _AuthState extends State<Auth> {
-  final List<Widget> _screenList = const [Signup(), Login()];
-  final int _currentScreen = 1;
+  // final List<Widget> _screenList = const [Signup(), Login()];
+  int _currentScreen = 1;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(body: _screenList[_currentScreen]);
+    return Scaffold(
+      body: _currentScreen == 1
+          ? Login(
+              onSwitch: () {
+                setState(() {
+                  _currentScreen = 0;
+                });
+              },
+            )
+          : Signup(
+              onSwitch: () {
+                setState(() {
+                  _currentScreen = 1;
+                });
+              },
+            ),
+    );
   }
 }

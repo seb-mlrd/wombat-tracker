@@ -12,15 +12,16 @@ class ManageUser {
     String confName,
     String confLastName,
   ) async {
-    final AuthResponse res = await supabase.auth.signUp(
+    // final AuthResponse res = await supabase.auth.signUp(
+    await supabase.auth.signUp(
       email: confEmail,
       password: confPassword,
       // enregistrement des informations de l'utilisateur dans la table Profil
       data: {'firstName': confName, 'lastName': confLastName},
     );
 
-    final Session? session = res.session;
-    final User? user = res.user;
+    // final Session? session = res.session;
+    // final User? user = res.user;
   }
 
   static Future<List> getProfil() async {

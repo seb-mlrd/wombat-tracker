@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
 
-import 'package:wombat_tracker/screen/auth/login.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
 
 import '../../widget/label_form.dart';
 import '../../widget/input_form.dart';
 import '../../widget/wombat_banner.dart';
-import '../../widget/redirect_link.dart';
 
 class Signup extends StatefulWidget {
-  const Signup({super.key});
+  final VoidCallback onSwitch;
+  const Signup({super.key, required this.onSwitch});
 
   @override
   State<Signup> createState() => _SignupState();
@@ -87,7 +86,11 @@ class _SignupState extends State<Signup> {
                 ],
               ),
             ),
-            RedirectLink(text: "Déjà un compte ? connecte toi", to: Login()),
+            // RedirectLink(text: "Déjà un compte ? connecte toi", to: Login()),
+            TextButton(
+              onPressed: widget.onSwitch,
+              child: const Text("Déjà un compte ? connecte toi"),
+            ),
           ],
         ),
       ),
