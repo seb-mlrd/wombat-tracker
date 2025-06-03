@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 
 import 'package:wombat_tracker/styles.dart';
-import 'package:wombat_tracker/utils/manage_user.dart';
+import 'package:wombat_tracker/utils/auth_services.dart';
+// import 'package:wombat_tracker/utils/manage_user.dart';
+import 'package:wombat_tracker/widget/button_cta.dart';
 
 import '../../widget/label_form.dart';
 import '../../widget/input_form.dart';
@@ -82,7 +84,27 @@ class _SignupState extends State<Signup> {
                     nameController: confirmPasswordController,
                     typeInput: "Confirmation du mot de passe",
                   ),
-                  buttonSignup(context),
+                  // buttonSignup(context),
+                  ButtonCta(
+                    keyButton: "signUpButton",
+                    labelInput: 'Inscription',
+                    functionCallBack: () async {
+                      AuthServices.signup(
+                        {
+                          "password": passwordController.text,
+                          "email": emailController.text,
+                          "lastName": lastNameController.text,
+                          "name": nameController.text,
+                          "confirmPassword": confirmPasswordController.text,
+                        },
+                        context,
+                        _formKey,
+                      );
+                    },
+                    colorButton: primaryBase,
+                    colorLabelbutton: secondaryBase,
+                    buildContext: context,
+                  ),
                 ],
               ),
             ),
@@ -97,67 +119,67 @@ class _SignupState extends State<Signup> {
     );
   }
 
-  Container buttonSignup(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(16),
-      key: Key("signUpButton"),
-      child: Align(
-        alignment: Alignment.center,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: primaryBase,
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          ),
-          onPressed: () async {
-            if (_formKey.currentState!.validate()) {
-              final confPassword = passwordController.text;
-              final confEmail = emailController.text;
-              final confLastName = lastNameController.text;
-              final confName = nameController.text;
-              final confPasswordConfirm = confirmPasswordController.text;
+  // Container buttonSignup(BuildContext context) {
+  //   return Container(
+  //     margin: EdgeInsets.all(16),
+  //     key: Key("signUpButton"),
+  //     child: Align(
+  //       alignment: Alignment.center,
+  //       child: ElevatedButton(
+  //         style: ElevatedButton.styleFrom(
+  //           backgroundColor: primaryBase,
+  //           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+  //         ),
+  //         onPressed: () async {
+  //           if (_formKey.currentState!.validate()) {
+  //             final confPassword = passwordController.text;
+  //             final confEmail = emailController.text;
+  //             final confLastName = lastNameController.text;
+  //             final confName = nameController.text;
+  //             final confPasswordConfirm = confirmPasswordController.text;
 
-              FocusScope.of(context).requestFocus(
-                FocusNode(),
-              ); // pour retirer le clavier au moment d'envoyer les informations
+  //             FocusScope.of(context).requestFocus(
+  //               FocusNode(),
+  //             ); // pour retirer le clavier au moment d'envoyer les informations
 
-              if (confPassword != confPasswordConfirm) {
-                // Affiche une erreur
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Les mots de passe ne correspondent pas."),
-                    backgroundColor: senaryBase,
-                  ),
-                );
-                return;
-              }
-              try {
-                // utilisation de supabase pour l'inscription
-                await ManageUser.createUser(
-                  confEmail,
-                  confPassword,
-                  confName,
-                  confLastName,
-                );
+  //             if (confPassword != confPasswordConfirm) {
+  //               // Affiche une erreur
+  //               ScaffoldMessenger.of(context).showSnackBar(
+  //                 const SnackBar(
+  //                   content: Text("Les mots de passe ne correspondent pas."),
+  //                   backgroundColor: senaryBase,
+  //                 ),
+  //               );
+  //               return;
+  //             }
+  //             try {
+  //               // utilisation de supabase pour l'inscription
+  //               await ManageUser.createUser(
+  //                 confEmail,
+  //                 confPassword,
+  //                 confName,
+  //                 confLastName,
+  //               );
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Inscription réussie."),
-                    backgroundColor: primary200,
-                  ),
-                );
-              } catch (e) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
-              }
-            }
-          },
-          child: Text(
-            "Inscription",
-            style: subSubTitle.copyWith(color: secondaryBase),
-          ),
-        ),
-      ),
-    );
-  }
+  //               ScaffoldMessenger.of(context).showSnackBar(
+  //                 const SnackBar(
+  //                   content: Text("Inscription réussie."),
+  //                   backgroundColor: primary200,
+  //                 ),
+  //               );
+  //             } catch (e) {
+  //               ScaffoldMessenger.of(
+  //                 context,
+  //               ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
+  //             }
+  //           }
+  //         },
+  //         child: Text(
+  //           "Inscription",
+  //           style: subSubTitle.copyWith(color: secondaryBase),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }

@@ -104,7 +104,7 @@ class _ProfilState extends State<Profil> {
                         ButtonCta(
                           keyButton: "Déconnexion",
                           labelInput: "Déconnexion",
-                          functionCalBack: () async {
+                          functionCallBack: () async {
                             await AuthServices.logout(context);
                           },
                           colorButton: senaryBase,
@@ -114,7 +114,7 @@ class _ProfilState extends State<Profil> {
                         ButtonCta(
                           keyButton: "Modifier",
                           labelInput: "Modifier",
-                          functionCalBack: () async {
+                          functionCallBack: () async {
                             print("passwordController.text");
                           },
                           colorButton: primary200,

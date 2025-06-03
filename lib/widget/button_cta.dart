@@ -4,7 +4,7 @@ import '../styles.dart';
 class ButtonCta extends StatelessWidget {
   final String keyButton;
   final String labelInput;
-  final Future<void> Function() functionCalBack;
+  final Future<void> Function() functionCallBack;
   final Color? colorButton;
   final Color colorLabelbutton;
   final BuildContext buildContext;
@@ -13,7 +13,7 @@ class ButtonCta extends StatelessWidget {
     super.key,
     required this.keyButton,
     required this.labelInput,
-    required this.functionCalBack,
+    required this.functionCallBack,
     required this.colorButton,
     required this.colorLabelbutton,
     required this.buildContext,
@@ -31,7 +31,7 @@ class ButtonCta extends StatelessWidget {
             backgroundColor: colorButton,
             padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
           ),
-          onPressed: functionCalBack,
+          onPressed: functionCallBack,
           child: Text(
             labelInput,
             style: subSubTitle.copyWith(color: colorLabelbutton),

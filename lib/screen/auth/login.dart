@@ -3,7 +3,9 @@ import 'package:wombat_tracker/styles.dart';
 
 // import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'package:wombat_tracker/main.dart';
+// import 'package:wombat_tracker/main.dart';
+import 'package:wombat_tracker/utils/auth_services.dart';
+import 'package:wombat_tracker/widget/button_cta.dart';
 
 import '../../widget/label_form.dart';
 import '../../widget/input_form.dart';
@@ -23,6 +25,7 @@ class _LoginState extends State<Login> {
   // controller qui va nous permettre de récupérer la valeur de notre input, pour chaque champs que l'on aura on devra créer un controller
   final passwordController = TextEditingController(); //controller pour le nom
   final emailController = TextEditingController(); //controller pour l'email
+
   @override
   void dispose() {
     passwordController.dispose();
@@ -58,7 +61,20 @@ class _LoginState extends State<Login> {
                     nameController: passwordController,
                     typeInput: "Mot de passe",
                   ),
-                  buttonLogin(context),
+                  // buttonLogin(context),
+                  ButtonCta(
+                    keyButton: "loginButton",
+                    labelInput: 'connexion',
+                    functionCallBack: () async {
+                      AuthServices.login({
+                        "password": passwordController.text,
+                        "email": emailController.text,
+                      }, context, _formKey);
+                    },
+                    colorButton: primaryBase,
+                    colorLabelbutton: secondaryBase,
+                    buildContext: context,
+                  ),
                 ],
               ),
             ),
@@ -76,57 +92,57 @@ class _LoginState extends State<Login> {
     );
   }
 
-  Container buttonLogin(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.all(16),
-      key: Key("loginButton"),
-      child: Align(
-        alignment: Alignment.center,
-        child: ElevatedButton(
-          style: ElevatedButton.styleFrom(
-            backgroundColor: primaryBase,
-            padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-          ),
-          onPressed: () async {
-            if (_formKey.currentState!.validate()) {
-              final confPassword = passwordController.text;
-              final confEmail = emailController.text;
+  // Container buttonLogin(BuildContext context) {
+  //   return Container(
+  //     margin: EdgeInsets.all(16),
+  //     key: Key("loginButton"),
+  //     child: Align(
+  //       alignment: Alignment.center,
+  //       child: ElevatedButton(
+  //         style: ElevatedButton.styleFrom(
+  //           backgroundColor: primaryBase,
+  //           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+  //         ),
+  //         onPressed: () async {
+  //           if (_formKey.currentState!.validate()) {
+  //             final confPassword = passwordController.text;
+  //             final confEmail = emailController.text;
 
-              FocusScope.of(context).requestFocus(
-                FocusNode(),
-              ); // pour retirer le clavier au moment d'envoyer les informations
+  //             FocusScope.of(context).requestFocus(
+  //               FocusNode(),
+  //             ); // pour retirer le clavier au moment d'envoyer les informations
 
-              try {
-                // utilisation de supabase pour l'inscription
-                // final AuthResponse res = await supabase.auth.signInWithPassword(
-                await supabase.auth.signInWithPassword(
-                  email: confEmail,
-                  password: confPassword,
-                  // enregistrement des informations de l'utilisateur dans la table Profil
-                );
+  //             try {
+  //               // utilisation de supabase pour l'inscription
+  //               // final AuthResponse res = await supabase.auth.signInWithPassword(
+  //               await supabase.auth.signInWithPassword(
+  //                 email: confEmail,
+  //                 password: confPassword,
+  //                 // enregistrement des informations de l'utilisateur dans la table Profil
+  //               );
 
-                // final Session? session = res.session;
-                // final User? user = res.user;
+  //               // final Session? session = res.session;
+  //               // final User? user = res.user;
 
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Connexion réussie."),
-                    backgroundColor: primary200,
-                  ),
-                );
-              } catch (e) {
-                ScaffoldMessenger.of(
-                  context,
-                ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
-              }
-            }
-          },
-          child: Text(
-            "Connexion",
-            style: subSubTitle.copyWith(color: secondaryBase),
-          ),
-        ),
-      ),
-    );
-  }
+  //               ScaffoldMessenger.of(context).showSnackBar(
+  //                 const SnackBar(
+  //                   content: Text("Connexion réussie."),
+  //                   backgroundColor: primary200,
+  //                 ),
+  //               );
+  //             } catch (e) {
+  //               ScaffoldMessenger.of(
+  //                 context,
+  //               ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
+  //             }
+  //           }
+  //         },
+  //         child: Text(
+  //           "Connexion",
+  //           style: subSubTitle.copyWith(color: secondaryBase),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 }
