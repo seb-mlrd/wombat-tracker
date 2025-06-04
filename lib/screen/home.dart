@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wombat_tracker/styles.dart';
+import 'package:wombat_tracker/utils/location_services.dart';
 import 'package:wombat_tracker/widget/timmer_card.dart';
 import 'package:wombat_tracker/widget/weather_card.dart';
 import '../widget/wombat_banner.dart';
-import 'package:location/location.dart';
-import 'package:url_launcher/url_launcher.dart';
-
-const _url = 'https://github.com/Lyokone/flutterlocation';
 
 class Home extends StatefulWidget {
 
@@ -17,60 +14,65 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final Location location = Location();
-
-  Future<void> _showInfoDialog() {
-
-    return showDialog<void>(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          title: const Text('Demo Application'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                const Text('Created by Guillaume Bernos'),
-                InkWell(
-                  child: const Text(
-                    _url,
-                    style: TextStyle(
-                      decoration: TextDecoration.underline,
-                    ),
-                  ),
-                  onTap: () => launchUrl(Uri.parse(_url)),
-                ),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: const Text('Ok'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
+  String? lat,long;
+  @override
+  void initState()
+  {
+    super.initState();
+    getLocation();
   }
+
+  // Future<void> _getLocation() async {
+  //   bool _serviceEnabled;
+  //   PermissionStatus _permissionGranted;
+
+  //   // Vérifie si le service de localisation est activé
+  //   _serviceEnabled = await location.serviceEnabled();
+  //   if (!_serviceEnabled) {
+  //     _serviceEnabled = await location.requestService();
+  //     if (!_serviceEnabled) {
+  //       setState(() {
+  //         _status = "Service de localisation non activé.";
+  //       });
+  //       return;
+  //     }
+  //   }
+
+  //   // Vérifie les permissions
+  //   _permissionGranted = await location.hasPermission();
+  //   if (_permissionGranted == PermissionStatus.denied) {
+  //     _permissionGranted = await location.requestPermission();
+  //     if (_permissionGranted != PermissionStatus.granted) {
+  //       setState(() {
+  //         _status = "Permission de localisation refusée.";
+  //       });
+  //       return;
+  //     }
+  //   }
+
+  //   // Récupère la position
+  //   try {
+  //     final locData = await location.getLocation();
+  //     setState(() {
+  //       _locationData = locData;
+  //       _status = "Latitude: ${locData.latitude}, Longitude: ${locData.longitude}";
+  //     });
+  //   } catch (e) {
+  //     setState(() {
+  //       _status = "Erreur lors de la récupération de la localisation.";
+  //     });
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
    return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.info_outline),
-            onPressed: _showInfoDialog,
-          ),
-        ],
-      ),
       backgroundColor: primaryBase,
       body: SafeArea(
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Text('latitude = ${lat ?? "loading..."}, longitude = ${long?? "loading..."}'),
               WombatBanner(),
               WeatherCard(),
               SizedBox(height: 64),
@@ -81,5 +83,18 @@ class _HomeState extends State<Home> {
         ),
       ),
     );
+  }
+
+  void getLocation() async {
+    final service = LocationServices();
+
+    final locationData = await service.getLocation();
+
+    if(locationData != null){
+      setState(() {
+        lat = locationData.latitude!.toString();
+        long = locationData.longitude!.toString();
+      });
+    }
   }
 }
