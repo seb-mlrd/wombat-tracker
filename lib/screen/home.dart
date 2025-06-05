@@ -72,7 +72,6 @@ class _HomeState extends State<Home> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Text('latitude = ${lat ?? "loading..."}, longitude = ${long?? "loading..."}'),
               WombatBanner(),
               WeatherCard(),
               SizedBox(height: 64),
