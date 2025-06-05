@@ -2,6 +2,7 @@
 // package
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wombat_tracker/screen/edit_profil.dart';
 
 // file
 // import 'package:wombat_tracker/main.dart';
@@ -115,7 +116,14 @@ class _ProfilState extends State<Profil> {
                           keyButton: "Modifier",
                           labelInput: "Modifier",
                           functionCallBack: () async {
-                            print("passwordController.text");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return EditProfil();
+                                },
+                              ),
+                            );
                           },
                           colorButton: primary200,
                           colorLabelbutton: tertiary100,

@@ -28,6 +28,7 @@ class _InputFormState extends State<InputForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 41, vertical: 4),
       child: TextFormField(
+        maxLines: type == "edit-bio" ? 6 : 1,
         controller: widget.nameController,
         obscureText: isPassword ? !passwordVisible : false,
         validator: (value) => Validators.validate(value, type),
