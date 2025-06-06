@@ -34,14 +34,6 @@ class _ContentState extends State<Content> {
       final data = await ManageUser.getProfil();
       profils = data;
 
-      _screenList = [
-        const Community(),
-        const Planning(),
-        const Home(),
-        Profil(user: currentUser, profils: profils),
-        const Research(),
-      ];
-
       setState(() {
         isLoading = false;
       });
@@ -55,6 +47,13 @@ class _ContentState extends State<Content> {
     if (isLoading) {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     } else {
+      _screenList = [
+        const Community(),
+        const Planning(),
+        const Home(),
+        Profil(user: currentUser, profils: profils),
+        const Research(),
+      ];
       return Scaffold(
         body: _screenList[_currentScreen],
         bottomNavigationBar: BottomNavigationBar(
@@ -63,10 +62,19 @@ class _ContentState extends State<Content> {
           unselectedItemColor: primaryBase,
           backgroundColor: secondaryBase,
           currentIndex: _currentScreen,
-          onTap: (index) {
-            setState(() {
-              _currentScreen = index;
-            });
+          onTap: (index) async {
+            if (index == 3) {
+              // Si on va sur Profil, on recharge les profils
+              final data = await ManageUser.getProfil();
+              setState(() {
+                profils = data;
+                _currentScreen = index;
+              });
+            } else {
+              setState(() {
+                _currentScreen = index;
+              });
+            }
           },
           items: [
             BottomNavigationBarItem(

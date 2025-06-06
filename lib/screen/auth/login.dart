@@ -5,6 +5,7 @@ import 'package:wombat_tracker/styles.dart';
 
 // import 'package:wombat_tracker/main.dart';
 import 'package:wombat_tracker/utils/auth_services.dart';
+import 'package:wombat_tracker/utils/validators.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
 
 import '../../widget/label_form.dart';
@@ -53,6 +54,8 @@ class _LoginState extends State<Login> {
                     key: Key("inputEmail"),
                     nameController: emailController,
                     typeInput: "Email",
+                    methodeValidateInput: (value) =>
+                        Validators.validateEmail(emailController.text),
                   ),
 
                   LabelForm(labelName: "Mot de passe"),
@@ -60,16 +63,22 @@ class _LoginState extends State<Login> {
                     key: Key("inputPassword"),
                     nameController: passwordController,
                     typeInput: "Mot de passe",
+                    methodeValidateInput: (value) =>
+                        Validators.validatePassword(passwordController.text),
                   ),
                   // buttonLogin(context),
                   ButtonCta(
                     keyButton: "loginButton",
                     labelInput: 'connexion',
                     functionCallBack: () async {
-                      AuthServices.login({
-                        "password": passwordController.text,
-                        "email": emailController.text,
-                      }, context, _formKey);
+                      AuthServices.login(
+                        {
+                          "password": passwordController.text,
+                          "email": emailController.text,
+                        },
+                        context,
+                        _formKey,
+                      );
                     },
                     colorButton: primaryBase,
                     colorLabelbutton: secondaryBase,
@@ -78,10 +87,6 @@ class _LoginState extends State<Login> {
                 ],
               ),
             ),
-            // RedirectLink(
-            //   text: "Pas encore membre ? crée-toi un compte",
-            //   to: Signup(),
-            // ),
             TextButton(
               onPressed: widget.onSwitch,
               child: const Text("Pas encore membre ? crée-toi un compte"),
@@ -91,58 +96,4 @@ class _LoginState extends State<Login> {
       ),
     );
   }
-
-  // Container buttonLogin(BuildContext context) {
-  //   return Container(
-  //     margin: EdgeInsets.all(16),
-  //     key: Key("loginButton"),
-  //     child: Align(
-  //       alignment: Alignment.center,
-  //       child: ElevatedButton(
-  //         style: ElevatedButton.styleFrom(
-  //           backgroundColor: primaryBase,
-  //           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-  //         ),
-  //         onPressed: () async {
-  //           if (_formKey.currentState!.validate()) {
-  //             final confPassword = passwordController.text;
-  //             final confEmail = emailController.text;
-
-  //             FocusScope.of(context).requestFocus(
-  //               FocusNode(),
-  //             ); // pour retirer le clavier au moment d'envoyer les informations
-
-  //             try {
-  //               // utilisation de supabase pour l'inscription
-  //               // final AuthResponse res = await supabase.auth.signInWithPassword(
-  //               await supabase.auth.signInWithPassword(
-  //                 email: confEmail,
-  //                 password: confPassword,
-  //                 // enregistrement des informations de l'utilisateur dans la table Profil
-  //               );
-
-  //               // final Session? session = res.session;
-  //               // final User? user = res.user;
-
-  //               ScaffoldMessenger.of(context).showSnackBar(
-  //                 const SnackBar(
-  //                   content: Text("Connexion réussie."),
-  //                   backgroundColor: primary200,
-  //                 ),
-  //               );
-  //             } catch (e) {
-  //               ScaffoldMessenger.of(
-  //                 context,
-  //               ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
-  //             }
-  //           }
-  //         },
-  //         child: Text(
-  //           "Connexion",
-  //           style: subSubTitle.copyWith(color: secondaryBase),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
