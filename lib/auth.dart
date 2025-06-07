@@ -10,7 +10,6 @@ class Auth extends StatefulWidget {
 }
 
 class _AuthState extends State<Auth> {
-  // final List<Widget> _screenList = const [Signup(), Login()];
   int _currentScreen = 1;
 
   @override

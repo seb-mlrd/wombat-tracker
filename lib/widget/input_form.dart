@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:wombat_tracker/utils/validators.dart';
 import '../styles.dart';
 
 class InputForm extends StatefulWidget {
   final String typeInput;
   final TextEditingController nameController;
+  final FormFieldValidator<String>? methodeValidateInput;
+  final String defaultValue;
 
   const InputForm({
     super.key,
     required this.nameController,
     required this.typeInput,
+    required this.methodeValidateInput,
+    this.defaultValue = "",
   });
 
   @override
@@ -17,6 +20,12 @@ class InputForm extends StatefulWidget {
 }
 
 class _InputFormState extends State<InputForm> {
+  @override
+  void initState() {
+    super.initState();
+    widget.nameController.text = widget.defaultValue;
+  }
+
   bool passwordVisible = false;
 
   @override
@@ -28,9 +37,10 @@ class _InputFormState extends State<InputForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 41, vertical: 4),
       child: TextFormField(
+        maxLines: type == "edit-bio" ? 6 : 1,
         controller: widget.nameController,
         obscureText: isPassword ? !passwordVisible : false,
-        validator: (value) => Validators.validate(value, type),
+        validator: widget.methodeValidateInput,
         decoration: eyeDecoration(isPassword),
         style: const TextStyle(color: tertiary100),
       ),

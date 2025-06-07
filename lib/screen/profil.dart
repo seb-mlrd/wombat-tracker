@@ -2,6 +2,7 @@
 // package
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:wombat_tracker/screen/edit_profil.dart';
 
 // file
 // import 'package:wombat_tracker/main.dart';
@@ -9,6 +10,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 // style
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/auth_services.dart';
+import 'package:wombat_tracker/utils/manage_user.dart';
 
 // widget
 import 'package:wombat_tracker/widget/Avatar.dart';
@@ -29,32 +31,13 @@ class Profil extends StatefulWidget {
 
 class _ProfilState extends State<Profil> {
   final SupabaseClient supabaseClient = Supabase.instance.client;
-  // List<dynamic> profils = [];
+  List<dynamic> profils = [];
 
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   fetchProfil();
-  // }
-
-  // Future<void> fetchProfil() async {
-  //   print('User ID: ${widget.user!.email}');
-
-  //   if (widget.user == null) return;
-  //   try {
-  //     final response = await supabaseClient
-  //         .from('profil')
-  //         .select('*')
-  //         .eq('userUuid', widget.user!.id)
-  //         .single();
-  //     print('Response: $response');
-  //     setState(() {
-  //       profils = [response];
-  //     });
-  //   } catch (e) {
-  //     print(e);
-  //   }
-  // }
+  @override
+  void initState() {
+    super.initState();
+    profils = widget.profils;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,8 +56,8 @@ class _ProfilState extends State<Profil> {
               infoUser(),
 
               SizedBox(height: 16),
-              if (widget.profils.isNotEmpty)
-                UserBio(bio: widget.profils[0]["bio"] ?? "Aucune bio"),
+              if (profils.isNotEmpty)
+                UserBio(bio: profils[0]["bio"] ?? "Aucune bio"),
 
               Container(
                 width: double.infinity,
@@ -97,7 +80,6 @@ class _ProfilState extends State<Profil> {
                     containerBestStat(),
                     SizedBox(height: 16),
                     containerFriends(),
-                    // logOut(context),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -115,7 +97,24 @@ class _ProfilState extends State<Profil> {
                           keyButton: "Modifier",
                           labelInput: "Modifier",
                           functionCallBack: () async {
-                            print("passwordController.text");
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) {
+                                  return EditProfil(profils: profils);
+                                },
+                              ),
+                            ).then((update) async {
+                              if (update == true) {
+                                // on met a jour le profil ici si on retourne de la page edit et que l'on a modifier un élément
+                                // profils = await ManageUser.getProfil();
+                                final updatedProfil =
+                                    await ManageUser.getProfil();
+                                setState(() {
+                                  profils = updatedProfil;
+                                });
+                              }
+                            });
                           },
                           colorButton: primary200,
                           colorLabelbutton: tertiary100,
@@ -170,10 +169,10 @@ class _ProfilState extends State<Profil> {
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
-        if (widget.profils.isNotEmpty)
+        if (profils.isNotEmpty)
           NameUser(
-            name: widget.profils[0]["firstName"].toString(),
-            lastName: widget.profils[0]["lastName"].toString(),
+            name: profils[0]["firstName"].toString(),
+            lastName: profils[0]["lastName"].toString(),
           ),
         SizedBox(width: 18),
         SizedBox(
@@ -181,8 +180,7 @@ class _ProfilState extends State<Profil> {
           child: const VerticalDivider(thickness: 2, color: secondaryBase),
         ),
         SizedBox(width: 18),
-        if (widget.profils.isNotEmpty)
-          NumberStick(nbStick: widget.profils[0]["nbrStick"]),
+        if (profils.isNotEmpty) NumberStick(nbStick: profils[0]["nbrStick"]),
       ],
     );
   }
@@ -226,25 +224,4 @@ class _ProfilState extends State<Profil> {
     );
   }
 
-  // ElevatedButton logOut(BuildContext context) {
-  //   return ElevatedButton(
-  //     onPressed: () async {
-  //       try {
-  //         await supabase.auth.signOut();
-  //         if (!mounted) return;
-  //         ScaffoldMessenger.of(context).showSnackBar(
-  //           const SnackBar(
-  //             content: Text("Déconnexion réussie."),
-  //             backgroundColor: primary200,
-  //           ),
-  //         );
-  //       } catch (e) {
-  //         ScaffoldMessenger.of(
-  //           context,
-  //         ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
-  //       }
-  //     },
-  //     child: Text("Déconnecter"),
-  //   );
-  // }
 }

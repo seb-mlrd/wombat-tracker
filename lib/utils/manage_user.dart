@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../main.dart';
 
@@ -32,5 +33,29 @@ class ManageUser {
         .single();
 
     return [response];
+  }
+
+  static Future<void> editUser(
+    // String name,
+    // String lastName,
+    // String phone,
+    // String bio,
+    Map data,
+    BuildContext context,
+    GlobalKey<FormState> formKey,
+  ) async {
+    if (formKey.currentState!.validate()) {
+      print(data);
+      try {
+        await supabaseClient
+            .from('profil')
+            .update(data)
+            .eq('userUuid', currentUser!.id);
+      } catch (e) {
+        print(e);
+      }
+
+      /// appelle de la méthode spuabase pour modifier un user
+    }
   }
 }

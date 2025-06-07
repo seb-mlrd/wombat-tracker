@@ -15,7 +15,7 @@ void main() {
 
       await tester.pump();
 
-      expect(find.text("Le champs Email est vide"), findsOneWidget);
+      expect(find.text("Le champ Email est vide"), findsOneWidget);
     });
     testWidgets("input password formulaire longin", (
       WidgetTester tester,
@@ -29,7 +29,7 @@ void main() {
 
       await tester.pump();
 
-      expect(find.text("Le champs Mot de passe est vide"), findsOneWidget);
+      expect(find.text("Le champ Mot de passe est vide"), findsOneWidget);
     });
   });
   group("Voir / cacher le mot de passe", () {

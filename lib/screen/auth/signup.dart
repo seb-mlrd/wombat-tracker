@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/auth_services.dart';
+import 'package:wombat_tracker/utils/validators.dart';
 // import 'package:wombat_tracker/utils/manage_user.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
 
@@ -55,6 +56,8 @@ class _SignupState extends State<Signup> {
                     key: Key('inputEmail'),
                     nameController: emailController,
                     typeInput: "Email",
+                    methodeValidateInput: (value) =>
+                        Validators.validateEmail(emailController.text),
                   ),
 
                   LabelForm(labelName: "Nom"),
@@ -62,6 +65,8 @@ class _SignupState extends State<Signup> {
                     key: Key('inputName'),
                     nameController: nameController,
                     typeInput: "Nom",
+                    methodeValidateInput: (value) =>
+                        Validators.checkInputEmpty(emailController.text, "Nom"),
                   ),
 
                   LabelForm(labelName: "Prenom"),
@@ -69,6 +74,10 @@ class _SignupState extends State<Signup> {
                     key: Key('inputLastName'),
                     nameController: lastNameController,
                     typeInput: "Prenom",
+                    methodeValidateInput: (value) => Validators.checkInputEmpty(
+                      lastNameController.text,
+                      "Prénom",
+                    ),
                   ),
 
                   LabelForm(labelName: "Mot de passe"),
@@ -76,6 +85,8 @@ class _SignupState extends State<Signup> {
                     key: Key("inputPassword"),
                     nameController: passwordController,
                     typeInput: "Mot de passe",
+                    methodeValidateInput: (value) =>
+                        Validators.validatePassword(passwordController.text),
                   ),
 
                   LabelForm(labelName: "Confirmation du mot de passe"),
@@ -83,8 +94,11 @@ class _SignupState extends State<Signup> {
                     key: Key("inputConfirmPassword"),
                     nameController: confirmPasswordController,
                     typeInput: "Confirmation du mot de passe",
+                    methodeValidateInput: (value) =>
+                        Validators.validatePassword(
+                          confirmPasswordController.text,
+                        ),
                   ),
-                  // buttonSignup(context),
                   ButtonCta(
                     keyButton: "signUpButton",
                     labelInput: 'Inscription',
@@ -108,7 +122,6 @@ class _SignupState extends State<Signup> {
                 ],
               ),
             ),
-            // RedirectLink(text: "Déjà un compte ? connecte toi", to: Login()),
             TextButton(
               onPressed: widget.onSwitch,
               child: const Text("Déjà un compte ? connecte toi"),
@@ -118,68 +131,4 @@ class _SignupState extends State<Signup> {
       ),
     );
   }
-
-  // Container buttonSignup(BuildContext context) {
-  //   return Container(
-  //     margin: EdgeInsets.all(16),
-  //     key: Key("signUpButton"),
-  //     child: Align(
-  //       alignment: Alignment.center,
-  //       child: ElevatedButton(
-  //         style: ElevatedButton.styleFrom(
-  //           backgroundColor: primaryBase,
-  //           padding: EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-  //         ),
-  //         onPressed: () async {
-  //           if (_formKey.currentState!.validate()) {
-  //             final confPassword = passwordController.text;
-  //             final confEmail = emailController.text;
-  //             final confLastName = lastNameController.text;
-  //             final confName = nameController.text;
-  //             final confPasswordConfirm = confirmPasswordController.text;
-
-  //             FocusScope.of(context).requestFocus(
-  //               FocusNode(),
-  //             ); // pour retirer le clavier au moment d'envoyer les informations
-
-  //             if (confPassword != confPasswordConfirm) {
-  //               // Affiche une erreur
-  //               ScaffoldMessenger.of(context).showSnackBar(
-  //                 const SnackBar(
-  //                   content: Text("Les mots de passe ne correspondent pas."),
-  //                   backgroundColor: senaryBase,
-  //                 ),
-  //               );
-  //               return;
-  //             }
-  //             try {
-  //               // utilisation de supabase pour l'inscription
-  //               await ManageUser.createUser(
-  //                 confEmail,
-  //                 confPassword,
-  //                 confName,
-  //                 confLastName,
-  //               );
-
-  //               ScaffoldMessenger.of(context).showSnackBar(
-  //                 const SnackBar(
-  //                   content: Text("Inscription réussie."),
-  //                   backgroundColor: primary200,
-  //                 ),
-  //               );
-  //             } catch (e) {
-  //               ScaffoldMessenger.of(
-  //                 context,
-  //               ).showSnackBar(SnackBar(content: Text('Erreur: $e')));
-  //             }
-  //           }
-  //         },
-  //         child: Text(
-  //           "Inscription",
-  //           style: subSubTitle.copyWith(color: secondaryBase),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
 }
