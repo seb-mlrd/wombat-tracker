@@ -53,7 +53,7 @@ class _MyTimmerState extends State<MyTimmer> {
                       });
                   },
                   style: FilledButton.styleFrom(
-                    backgroundColor: secondaryBase, // Couleur de fond
+                    backgroundColor: Colors.white, // Couleur de fond
                   ),
                   child: const Icon(Icons.pause_circle_rounded, size: 96, color: primaryBase,),
                 )
@@ -67,7 +67,7 @@ class _MyTimmerState extends State<MyTimmer> {
                     });
                 },
                 style: FilledButton.styleFrom(
-                  backgroundColor: secondaryBase, // Couleur de fond
+                  backgroundColor: Colors.white, // Couleur de fond
                 ),
                 child: const Icon(Icons.play_arrow_rounded, size: 96, color: primaryBase,),
               ),
@@ -82,7 +82,7 @@ class _MyTimmerState extends State<MyTimmer> {
                     });
                 },
                 style: FilledButton.styleFrom(
-                  backgroundColor: secondaryBase, // Couleur de fond
+                  backgroundColor: Colors.white, // Couleur de fond
                 ),
                 child: const Icon(Icons.stop_circle_rounded, size: 96, color: primaryBase,),
               ) : SizedBox()

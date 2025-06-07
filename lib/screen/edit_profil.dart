@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:wombat_tracker/main.dart';
+import 'package:wombat_tracker/screen/home.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
 import 'package:wombat_tracker/utils/validators.dart';
@@ -120,7 +122,14 @@ class _EditProfilState extends State<EditProfil> {
                           _formKey,
                         );
 
-                        Navigator.pop(context, true);
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder: (context) {
+                              return MainApp();
+                            },
+                          ),
+                        );
                       },
                       colorButton: primaryBase,
                       colorLabelbutton: secondaryBase,
