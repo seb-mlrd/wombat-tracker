@@ -6,6 +6,7 @@ import 'package:wombat_tracker/widget/Avatar.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
 import 'package:wombat_tracker/widget/input_form.dart';
 import 'package:wombat_tracker/widget/label_form.dart';
+import '../widget/wombat_banner_screen.dart';
 
 class EditProfil extends StatefulWidget {
   final List<dynamic> profils;
@@ -46,20 +47,7 @@ class _EditProfilState extends State<EditProfil> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                height: 154,
-                width: double.infinity,
-                margin: EdgeInsets.only(bottom: 16),
-                padding: EdgeInsets.only(top: 16, bottom: 16),
-                decoration: BoxDecoration(color: primaryBase),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset("assets/img/component1banner.png"),
-                    Image.asset("assets/img/component2banner.png"),
-                  ],
-                ),
-              ),
+              WombatBannerScreen(),
               Avatar(picture: "assets/img/avatar.png"),
 
               Text("Modifier", style: subTitle.copyWith(color: quinaryBase)),
