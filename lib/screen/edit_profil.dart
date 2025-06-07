@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
 import 'package:wombat_tracker/utils/validators.dart';
-import 'package:wombat_tracker/widget/Avatar.dart';
+import 'package:wombat_tracker/widget/avatar.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
 import 'package:wombat_tracker/widget/input_form.dart';
 import 'package:wombat_tracker/widget/label_form.dart';
@@ -48,7 +48,7 @@ class _EditProfilState extends State<EditProfil> {
           child: Column(
             children: [
               WombatBannerScreen(),
-              Avatar(picture: "assets/img/avatar.png"),
+              Avatar(picture: "assets/img/avatar.png", size: 50),
 
               Text("Modifier", style: subTitle.copyWith(color: quinaryBase)),
               Form(

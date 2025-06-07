@@ -35,11 +35,33 @@ class ManageUser {
     return [response];
   }
 
+  static Future<PostgrestList> getProfilByName(String name) async {
+    final List nameSplited = name.split(' ');
+
+    if (nameSplited.length == 1) {
+      final lastName = name.trim();
+      final response = await supabaseClient
+          .from('profil')
+          .select()
+          .or('firstName.ilike.%$lastName%,lastName.ilike.%$lastName%')
+          .neq('userUuid', currentUser!.id);
+      return response;
+    } else if (nameSplited.length >= 2) {
+      final String firstName = nameSplited[0];
+      final String lastName = nameSplited[1];
+      final response = await supabaseClient
+          .from('profil')
+          .select()
+          .or(
+            'firstName.ilike.%$firstName%,lastName.ilike.%$firstName%,firstName.ilike.%$lastName%,lastName.ilike.%$lastName%',
+          )
+          .neq('userUuid', currentUser!.id);
+      return response;
+    }
+    return [];
+  }
+
   static Future<void> editUser(
-    // String name,
-    // String lastName,
-    // String phone,
-    // String bio,
     Map data,
     BuildContext context,
     GlobalKey<FormState> formKey,

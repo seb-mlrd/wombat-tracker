@@ -6,6 +6,7 @@ class InputForm extends StatefulWidget {
   final TextEditingController nameController;
   final FormFieldValidator<String>? methodeValidateInput;
   final String defaultValue;
+  final double paddingHorizontal;
 
   const InputForm({
     super.key,
@@ -13,6 +14,7 @@ class InputForm extends StatefulWidget {
     required this.typeInput,
     required this.methodeValidateInput,
     this.defaultValue = "",
+    this.paddingHorizontal = 41,
   });
 
   @override
@@ -35,7 +37,10 @@ class _InputFormState extends State<InputForm> {
         type == "Mot de passe" || type == "Confirmation du mot de passe";
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 41, vertical: 4),
+      padding: EdgeInsets.symmetric(
+        horizontal: widget.paddingHorizontal,
+        vertical: 4,
+      ),
       child: TextFormField(
         maxLines: type == "edit-bio" ? 6 : 1,
         controller: widget.nameController,

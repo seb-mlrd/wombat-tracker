@@ -52,7 +52,7 @@ class _ContentState extends State<Content> {
         const Planning(),
         const Home(),
         Profil(user: currentUser, profils: profils),
-        const Research(),
+        Research(currentUser: profils),
       ];
       return Scaffold(
         body: _screenList[_currentScreen],

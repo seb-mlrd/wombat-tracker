@@ -10,10 +10,12 @@ import 'package:wombat_tracker/screen/edit_profil.dart';
 // style
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/auth_services.dart';
+import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
+import 'package:wombat_tracker/utils/text_services.dart';
 
 // widget
-import 'package:wombat_tracker/widget/Avatar.dart';
+import 'package:wombat_tracker/widget/avatar.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
 import '../widget/profil/name_user.dart';
 import '../widget/profil/number_stick.dart';
@@ -32,11 +34,20 @@ class Profil extends StatefulWidget {
 class _ProfilState extends State<Profil> {
   final SupabaseClient supabaseClient = Supabase.instance.client;
   List<dynamic> profils = [];
+  List<dynamic> friends = [];
 
   @override
   void initState() {
     super.initState();
     profils = widget.profils;
+    initializeData();
+  }
+
+  Future<void> initializeData() async {
+    final fetchedFriends = await FriendRelation.getFriend(profils[0]["id"]);
+    setState(() {
+      friends = fetchedFriends;
+    });
   }
 
   @override
@@ -50,7 +61,7 @@ class _ProfilState extends State<Profil> {
             children: [
               Text('Profil', style: subTitle.copyWith(color: tertiary100)),
               SizedBox(height: 16),
-              Avatar(picture: "assets/img/avatar.png"),
+              Avatar(picture: "assets/img/avatar.png", size: 50),
               SizedBox(height: 16),
 
               infoUser(),
@@ -107,7 +118,6 @@ class _ProfilState extends State<Profil> {
                             ).then((update) async {
                               if (update == true) {
                                 // on met a jour le profil ici si on retourne de la page edit et que l'on a modifier un élément
-                                // profils = await ManageUser.getProfil();
                                 final updatedProfil =
                                     await ManageUser.getProfil();
                                 setState(() {
@@ -153,14 +163,61 @@ class _ProfilState extends State<Profil> {
     );
   }
 
-  Center listFriends() {
-    return Center(
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text("Aucun ami", style: bodyTextMedium.copyWith(color: tertiary100)),
-        ],
+  SingleChildScrollView listFriends() {
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: friends.isNotEmpty
+            ? friends
+                  .map(
+                    (friend) => Padding(
+                      padding: const EdgeInsets.only(left: 27, top: 24),
+                      child: Row(
+                        children: [
+                          Avatar(
+                            picture:
+                                friend["friendId"]["avatar"] == "avatar.png"
+                                ? "assets/img/avatar.png"
+                                : friend["friendId"]["firstName"],
+                            size: 32,
+                          ),
+                          SizedBox(width: 32),
+                          SizedBox(
+                            width: 200,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  TextServices.truncate(
+                                    "${friend["friendId"]["firstName"]} ${friend["friendId"]["lastName"]}",
+                                    34,
+                                  ),
+                                  style: bodyTextMedium.copyWith(
+                                    color: tertiary100,
+                                  ),
+                                ),
+                                SizedBox(height: 8),
+                                Text(
+                                  friend["friendId"]["bio"],
+                                  maxLines: 2,
+                                  style: bodyTextMedium.copyWith(
+                                    color: tertiary100,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  )
+                  .toList()
+            : [
+                Text(
+                  "Aucun ami",
+                  style: bodyTextMedium.copyWith(color: tertiary100),
+                ),
+              ],
       ),
     );
   }
@@ -223,5 +280,4 @@ class _ProfilState extends State<Profil> {
       ),
     );
   }
-
 }
