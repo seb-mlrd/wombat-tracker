@@ -4,6 +4,7 @@ import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
 import 'package:wombat_tracker/utils/text_services.dart';
 import 'package:wombat_tracker/utils/validators.dart';
+import 'package:wombat_tracker/widget/app_bar_wombat.dart';
 import 'package:wombat_tracker/widget/input_form.dart';
 
 class Research extends StatefulWidget {
@@ -47,12 +48,7 @@ class _ResearchState extends State<Research> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Rechercher"),
-          backgroundColor: primaryBase,
-          titleTextStyle: subTitle.copyWith(color: secondaryBase),
-          toolbarHeight: 86,
-        ),
+        appBar: AppBarWombat(mainTitle: 'Rechercher'),
         body: SingleChildScrollView(
           child: Center(
             child: Column(
