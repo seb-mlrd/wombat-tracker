@@ -17,6 +17,7 @@ import 'package:wombat_tracker/utils/text_services.dart';
 // widget
 import 'package:wombat_tracker/widget/avatar.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
+import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
 import '../widget/profil/name_user.dart';
 import '../widget/profil/number_stick.dart';
 import '../widget/profil/user_bio.dart';
@@ -52,90 +53,91 @@ class _ProfilState extends State<Profil> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: primaryBase,
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: primaryBase,
+        body: SingleChildScrollView(
+          child: Center(
+            child: Column(
+              children: [
+                Text('Profil', style: subTitle.copyWith(color: tertiary100)),
+                SizedBox(height: 16),
+                Avatar(picture: "assets/img/avatar.png", size: 50),
+                SizedBox(height: 16),
 
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(
-            children: [
-              Text('Profil', style: subTitle.copyWith(color: tertiary100)),
-              SizedBox(height: 16),
-              Avatar(picture: "assets/img/avatar.png", size: 50),
-              SizedBox(height: 16),
+                infoUser(),
 
-              infoUser(),
+                SizedBox(height: 16),
+                if (profils.isNotEmpty)
+                  UserBio(bio: profils[0]["bio"] ?? "Aucune bio"),
 
-              SizedBox(height: 16),
-              if (profils.isNotEmpty)
-                UserBio(bio: profils[0]["bio"] ?? "Aucune bio"),
-
-              Container(
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(vertical: 16),
-                decoration: decorationMainContainerStat(),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.only(
-                        top: 32,
-                        bottom: 16,
-                        left: 32,
-                      ),
-                      child: Text(
-                        "Statistiques",
-                        style: subTitle.copyWith(color: quinaryBase),
-                      ),
-                    ),
-                    containerBestStat(),
-                    SizedBox(height: 16),
-                    containerFriends(),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ButtonCta(
-                          keyButton: "Déconnexion",
-                          labelInput: "Déconnexion",
-                          functionCallBack: () async {
-                            await AuthServices.logout(context);
-                          },
-                          colorButton: senaryBase,
-                          colorLabelbutton: tertiary100,
-                          buildContext: context,
+                Container(
+                  width: double.infinity,
+                  margin: EdgeInsets.symmetric(vertical: 16),
+                  decoration: decorationMainContainerStat(),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(
+                          top: 32,
+                          bottom: 16,
+                          left: 32,
                         ),
-                        ButtonCta(
-                          keyButton: "Modifier",
-                          labelInput: "Modifier",
-                          functionCallBack: () async {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return EditProfil(profils: profils);
-                                },
-                              ),
-                            ).then((update) async {
-                              if (update == true) {
-                                // on met a jour le profil ici si on retourne de la page edit et que l'on a modifier un élément
-                                final updatedProfil =
-                                    await ManageUser.getProfil();
-                                setState(() {
-                                  profils = updatedProfil;
-                                });
-                              }
-                            });
-                          },
-                          colorButton: primary200,
-                          colorLabelbutton: tertiary100,
-                          buildContext: context,
+                        child: Text(
+                          "Statistiques",
+                          style: subTitle.copyWith(color: quinaryBase),
                         ),
-                      ],
-                    ),
-                  ],
+                      ),
+                      containerBestStat(),
+                      SizedBox(height: 16),
+                      containerFriends(),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ButtonCta(
+                            keyButton: "Déconnexion",
+                            labelInput: "Déconnexion",
+                            functionCallBack: () async {
+                              await AuthServices.logout(context);
+                            },
+                            colorButton: senaryBase,
+                            colorLabelbutton: tertiary100,
+                            buildContext: context,
+                          ),
+                          ButtonCta(
+                            keyButton: "Modifier",
+                            labelInput: "Modifier",
+                            functionCallBack: () async {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return EditProfil(profils: profils);
+                                  },
+                                ),
+                              ).then((update) async {
+                                if (update == true) {
+                                  // on met a jour le profil ici si on retourne de la page edit et que l'on a modifier un élément
+                                  final updatedProfil =
+                                      await ManageUser.getProfil();
+                                  setState(() {
+                                    profils = updatedProfil;
+                                  });
+                                }
+                              });
+                            },
+                            colorButton: primary200,
+                            colorLabelbutton: tertiary100,
+                            buildContext: context,
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
@@ -154,7 +156,7 @@ class _ProfilState extends State<Profil> {
 
   Container containerFriends() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 48),
+      margin: EdgeInsets.symmetric(horizontal: 32),
       padding: EdgeInsets.symmetric(vertical: 24),
       width: double.infinity,
       height: 300,
@@ -171,43 +173,14 @@ class _ProfilState extends State<Profil> {
             ? friends
                   .map(
                     (friend) => Padding(
-                      padding: const EdgeInsets.only(left: 27, top: 24),
-                      child: Row(
-                        children: [
-                          Avatar(
-                            picture:
-                                friend["friendId"]["avatar"] == "avatar.png"
-                                ? "assets/img/avatar.png"
-                                : friend["friendId"]["firstName"],
-                            size: 32,
-                          ),
-                          SizedBox(width: 32),
-                          SizedBox(
-                            width: 200,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  TextServices.truncate(
-                                    "${friend["friendId"]["firstName"]} ${friend["friendId"]["lastName"]}",
-                                    34,
-                                  ),
-                                  style: bodyTextMedium.copyWith(
-                                    color: tertiary100,
-                                  ),
-                                ),
-                                SizedBox(height: 8),
-                                Text(
-                                  friend["friendId"]["bio"],
-                                  maxLines: 2,
-                                  style: bodyTextMedium.copyWith(
-                                    color: tertiary100,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
+                      padding: const EdgeInsets.only(left: 24, top: 24),
+                      child: ThumbnailUser(
+                        avatar: friend["friendId"]["avatar"],
+                        firstName: friend["friendId"]["firstName"],
+                        lastName: friend["friendId"]["lastName"],
+                        text: friend["friendId"]["bio"],
+                        colorText: tertiary100,
+                        fontText: bodyTextMedium,
                       ),
                     ),
                   )
@@ -244,7 +217,7 @@ class _ProfilState extends State<Profil> {
 
   Container containerBestStat() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 48),
+      margin: EdgeInsets.symmetric(horizontal: 32),
       padding: EdgeInsets.symmetric(vertical: 24),
       width: double.infinity,
       decoration: boxDecorationCardProfil(),
