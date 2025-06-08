@@ -3,6 +3,9 @@
         android:label="wombat_tracker"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
+
+        <meta-data android:name="com.google.android.geo.API_KEY"
+               android:value="AIzaSyCfn5RaoNxGcOtDOOGcxkJ8QH_Y17OZcfc"/>
         <activity
             android:name=".MainActivity"
             android:exported="true"
