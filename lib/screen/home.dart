@@ -79,7 +79,7 @@ class _HomeState extends State<Home> {
               MyTimmer(),
               SizedBox(height: 64),
               SizedBox(
-                height: 500,
+                height: 300,
                 child: Maps(),
               ),
               SizedBox(height: 64),
