@@ -1,13 +1,23 @@
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
 
 class LocationServices {
+  static final LocationServices _instance = LocationServices._internal();
+  factory LocationServices() => _instance;
+
+  LocationServices._internal(){
+    _location = Location();
+  }
+
   late Location _location;
   bool _serviceEnabled = false;
   PermissionStatus? _grantedPermission;
+  LocationData? locationInitialData;
+  static final ValueNotifier<bool> runReady = ValueNotifier(false);
 
-  LocationServices(){
-    _location = Location();
+  static void setRunReady(bool value) {
+    runReady.value = value;
   }
 
   Future<bool> _checkPermission() async{
@@ -43,4 +53,13 @@ class LocationServices {
     }
     return null;
   }
+
+  Future<void> setInitialLocation() async {
+    locationInitialData = await getLocation();
+  }
+
+  Future <LocationData?> getInitialLocation() async {
+    return locationInitialData;
+  }
+  
 }

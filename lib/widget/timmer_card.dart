@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:wombat_tracker/styles.dart';
+import 'package:wombat_tracker/utils/location_services.dart';
 
 class MyTimmer extends StatefulWidget {
   @override
@@ -10,10 +11,11 @@ class MyTimmer extends StatefulWidget {
 class _MyTimmerState extends State<MyTimmer> {
   final StopWatchTimer _stopWatchTimer = StopWatchTimer(
     mode: StopWatchMode.countUp,
-  ); // Create instance.
+  );
   final _isHours = true;
   bool _playTimer = false;
   bool _time = false;
+
   @override
   void initState() {
     super.initState();
@@ -22,7 +24,7 @@ class _MyTimmerState extends State<MyTimmer> {
   @override
   void dispose() async {
     super.dispose();
-    await _stopWatchTimer.dispose();  // Need to call dispose function.
+    await _stopWatchTimer.dispose();
   }
 
   @override
@@ -59,12 +61,14 @@ class _MyTimmerState extends State<MyTimmer> {
                 )
               : 
               FilledButton(
-                onPressed: () {
+                onPressed: () async {
                     _stopWatchTimer.onStartTimer();
                     setState(() {
                       _playTimer = true;
                       _time = true;
                     });
+                    await setLocation();
+                    LocationServices.setRunReady(true);
                 },
                 style: FilledButton.styleFrom(
                   backgroundColor: Colors.white, // Couleur de fond
@@ -79,6 +83,7 @@ class _MyTimmerState extends State<MyTimmer> {
                     setState(() {
                       _playTimer = false;
                       _time = false;
+                      LocationServices.setRunReady(false);
                     });
                 },
                 style: FilledButton.styleFrom(
@@ -99,7 +104,9 @@ class _MyTimmerState extends State<MyTimmer> {
         padding: EdgeInsets.only(left: 18.0, right:31.0, top: 4.0, bottom: 9.0),
         child: Text(text, style: addStick.copyWith(color: secondaryBase)),
   );
-}
 
-// // Reset timer
-// _stopWatchTimer.onResetTimer();
+  Future<void> setLocation() async {
+    final service = LocationServices();
+    await service.setInitialLocation();
+  }
+}
