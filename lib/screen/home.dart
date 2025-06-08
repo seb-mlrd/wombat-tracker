@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/location_services.dart';
+import 'package:wombat_tracker/widget/maps.dart';
 import 'package:wombat_tracker/widget/timmer_card.dart';
 import 'package:wombat_tracker/widget/weather_card.dart';
 import '../widget/wombat_banner.dart';
@@ -76,6 +77,11 @@ class _HomeState extends State<Home> {
               WeatherCard(),
               SizedBox(height: 64),
               MyTimmer(),
+              SizedBox(height: 64),
+              SizedBox(
+                height: 300,
+                child: Maps(),
+              ),
               SizedBox(height: 64),
             ],
           ),
