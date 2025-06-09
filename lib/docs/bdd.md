@@ -1,9 +1,10 @@
 ```mermaid
 erDiagram
-    PROFIL ||--o{ STATS : has
-    PROFIL ||--o{ FRIENDRELATION : is_friend
-    PROFIL ||--o{ FRIENDRELATION : is_requester
-    PROFIL {
+    profil ||--o{ stats : has
+    profil ||--o{ friend-relation : is_friend
+    profil ||--o{ friend-relation : is_requester
+    modules ||--o{ sequences : contain
+    profil {
         int id
         String firstName
         String lastName
@@ -15,7 +16,7 @@ erDiagram
         String roles
         int nbrStick
     }
-    STATS {
+    stats {
         int id
         String time
         int distance
@@ -24,11 +25,23 @@ erDiagram
         int id_user
         DateTime date
     }
-    FRIENDRELATION {
+    friend-relation {
         int id
         string friendName
         string requesterName
         int friendId
         int requesterId
+    }
+    sequences{
+        int id 
+        string titleSequences
+        json descriptionSequences
+        int duration
+        int numberOfCircuit 
+        int idModule
+    }
+    modules{
+        int id
+        string titleModule
     }
 ```

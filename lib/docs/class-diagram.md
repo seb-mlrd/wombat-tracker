@@ -37,10 +37,6 @@ classDiagram
         +fromJson()
     }
 
-    ProfilService "1" -- "*" FriendRelation : isFriend
-    ProfilService --* Stats : has
-    ManageUser ..> ProfilService : manages
-
     class FriendRelation {
         +int id
         +String friendName
@@ -54,10 +50,41 @@ classDiagram
         +fromJson()
     }
 
+
     class ManageUser {
         +editUser(int id)
         +deleteUser(int id)
         +createUser()
         +getUserById(int id)
     }
+  
+    class Sequences{
+        +int id 
+        +String titleSequences
+        +Json descriptionSequences
+        +int duration
+        +int numberOfCircuit 
+        +int idModule
+        +toJson()
+        +fromJson()
+    }
+
+    class Modules{
+        +int id
+        +String titleModule
+        +toJson()
+        +fromJson()
+    }
+    class ModulesNetwork{
+        +loadModules()
+    }
+    class SequencesNetwork{
+        +loadModulesByIdSequence(int idSequence)
+    }
+
+    ProfilService "1" -- "*" FriendRelation : isFriend
+    ProfilService --* Stats : has
+    ManageUser ..> ProfilService : manages
+    ModulesNetwork *-- Modules : contains
+    SequencesNetwork *-- Sequences : contains
 ```
