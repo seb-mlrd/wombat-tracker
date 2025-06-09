@@ -26,7 +26,7 @@ class Community extends StatelessWidget {
       children: [
         SizedBox(height: 24),
         ThumbnailUser(
-          avatar: "assets/img/avatar.png",
+          avatar: "avatar.png",
           firstName: "james",
           lastName: "Ahmaedaly",
           text: "17/05/2025    17:06",

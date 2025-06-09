@@ -10,7 +10,9 @@ class Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     return CircleAvatar(
       maxRadius: size,
-      backgroundImage: AssetImage(picture),
+      backgroundImage: picture == "avatar.png"
+          ? AssetImage("assets/img/$picture")
+          : NetworkImage(picture),
       backgroundColor: primary700,
     );
   }

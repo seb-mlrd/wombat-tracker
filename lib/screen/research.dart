@@ -5,6 +5,7 @@ import 'package:wombat_tracker/utils/manage_user.dart';
 import 'package:wombat_tracker/utils/text_services.dart';
 import 'package:wombat_tracker/utils/validators.dart';
 import 'package:wombat_tracker/widget/app_bar_wombat.dart';
+import 'package:wombat_tracker/widget/avatar.dart';
 import 'package:wombat_tracker/widget/input_form.dart';
 
 class Research extends StatefulWidget {
@@ -151,12 +152,7 @@ class _ResearchState extends State<Research> {
             Row(
               spacing: 24,
               children: [
-                CircleAvatar(
-                  maxRadius: 37,
-                  backgroundImage: AssetImage('assets/img/avatar.png'),
-                  backgroundColor: primary700,
-                ),
-
+                Avatar(picture: avatar, size: 37),
                 Text(
                   TextServices.truncate(nameOfResearch, 19),
                   overflow: TextOverflow.ellipsis,

@@ -9,7 +9,7 @@ class ThumbnailUser extends StatelessWidget {
   final String lastName;
   final String text;
   final Color colorText;
-  final TextStyle fontText; 
+  final TextStyle fontText;
   const ThumbnailUser({
     super.key,
     required this.avatar,
@@ -24,10 +24,7 @@ class ThumbnailUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Row(
       children: [
-        Avatar(
-          picture: avatar == "avatar.png" ? "assets/img/avatar.png" : avatar,
-          size: 32,
-        ),
+        Avatar(picture: avatar, size: 32),
         SizedBox(width: 16),
         SizedBox(
           width: 150,

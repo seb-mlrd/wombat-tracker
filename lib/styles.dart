@@ -22,10 +22,10 @@ const subSubTitle = TextStyle(fontSize: 16, fontFamily: 'Anton');
 
 const subSubSubTitle = TextStyle(fontSize: 10, fontFamily: 'Anton');
 
-const addStick = TextStyle(fontSize: 12, fontFamily: 'Anton');
-
 const bodyText = TextStyle(fontSize: 36, fontFamily: 'Roboto');
 
 const bodyTextMedium = TextStyle(fontSize: 16, fontFamily: 'Roboto');
+
+const addStick = TextStyle(fontSize: 12, fontFamily: 'Anton');
 
 const bodyTextSmall = TextStyle(fontSize: 8, fontFamily: 'Roboto');

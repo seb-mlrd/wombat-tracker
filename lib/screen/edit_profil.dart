@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:wombat_tracker/main.dart';
-import 'package:wombat_tracker/screen/home.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
 import 'package:wombat_tracker/utils/validators.dart';
@@ -24,6 +23,7 @@ class _EditProfilState extends State<EditProfil> {
   final lastNameEditController = TextEditingController();
   final phoneEditController = TextEditingController();
   final bioEditController = TextEditingController();
+  final avatarEditController = TextEditingController();
 
   @override
   void dispose() {
@@ -31,6 +31,7 @@ class _EditProfilState extends State<EditProfil> {
     lastNameEditController.dispose();
     phoneEditController.dispose();
     bioEditController.dispose();
+    avatarEditController.dispose();
     super.dispose();
   }
 
@@ -50,7 +51,8 @@ class _EditProfilState extends State<EditProfil> {
           child: Column(
             children: [
               WombatBannerScreen(),
-              Avatar(picture: "assets/img/avatar.png", size: 50),
+              SizedBox(height: 16),
+              Avatar(picture: widget.profils[0]["avatar"], size: 50),
 
               Text("Modifier", style: subTitle.copyWith(color: quinaryBase)),
               Form(
@@ -106,24 +108,36 @@ class _EditProfilState extends State<EditProfil> {
                           ),
                       defaultValue: widget.profils[0]["bio"] ?? "",
                     ),
+                    LabelForm(labelName: "Lien Avatar"),
+                    InputForm(
+                      key: Key("avatarEditor"),
+                      nameController: avatarEditController,
+                      typeInput: "edit-avatar",
+                      methodeValidateInput: (value) =>
+                          Validators.checkInputEmpty(
+                            avatarEditController.text,
+                            "avatar",
+                          ),
+                      defaultValue: widget.profils[0]["avatar"] ?? "",
+                    ),
                     ButtonCta(
                       keyButton: "buttonEdit",
                       labelInput: "Enregistrer",
                       functionCallBack: () async {
-                        // print(widget.profils);
                         ManageUser.editUser(
                           {
                             "firstName": nameEditController.text,
                             "lastName": lastNameEditController.text,
                             "phone": phoneEditController.text,
                             "bio": bioEditController.text,
+                            "avatar": avatarEditController.text,
                           },
                           context,
                           _formKey,
                         );
 
                         Navigator.push(
-                          context, 
+                          context,
                           MaterialPageRoute(
                             builder: (context) {
                               return MainApp();

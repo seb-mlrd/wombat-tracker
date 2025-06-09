@@ -12,7 +12,6 @@ import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/auth_services.dart';
 import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
-import 'package:wombat_tracker/utils/text_services.dart';
 
 // widget
 import 'package:wombat_tracker/widget/avatar.dart';
@@ -62,7 +61,7 @@ class _ProfilState extends State<Profil> {
               children: [
                 Text('Profil', style: subTitle.copyWith(color: tertiary100)),
                 SizedBox(height: 16),
-                Avatar(picture: "assets/img/avatar.png", size: 50),
+                Avatar(picture: profils[0]["avatar"], size: 50),
                 SizedBox(height: 16),
 
                 infoUser(),
