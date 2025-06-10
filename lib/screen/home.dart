@@ -35,48 +35,6 @@ class _HomeState extends State<Home> {
     }
   }
 
-  // Future<void> _getLocation() async {
-  //   bool _serviceEnabled;
-  //   PermissionStatus _permissionGranted;
-
-  //   // Vérifie si le service de localisation est activé
-  //   _serviceEnabled = await location.serviceEnabled();
-  //   if (!_serviceEnabled) {
-  //     _serviceEnabled = await location.requestService();
-  //     if (!_serviceEnabled) {
-  //       setState(() {
-  //         _status = "Service de localisation non activé.";
-  //       });
-  //       return;
-  //     }
-  //   }
-
-  //   // Vérifie les permissions
-  //   _permissionGranted = await location.hasPermission();
-  //   if (_permissionGranted == PermissionStatus.denied) {
-  //     _permissionGranted = await location.requestPermission();
-  //     if (_permissionGranted != PermissionStatus.granted) {
-  //       setState(() {
-  //         _status = "Permission de localisation refusée.";
-  //       });
-  //       return;
-  //     }
-  //   }
-
-  //   // Récupère la position
-  //   try {
-  //     final locData = await location.getLocation();
-  //     setState(() {
-  //       _locationData = locData;
-  //       _status = "Latitude: ${locData.latitude}, Longitude: ${locData.longitude}";
-  //     });
-  //   } catch (e) {
-  //     setState(() {
-  //       _status = "Erreur lors de la récupération de la localisation.";
-  //     });
-  //   }
-  // }
-
   @override
   Widget build(BuildContext context) {
     if (!isReady) {

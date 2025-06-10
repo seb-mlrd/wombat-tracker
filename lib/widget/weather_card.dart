@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
 import 'package:wombat_tracker/consts.dart';
 import 'package:wombat_tracker/styles.dart';
-// import 'package:wombat_tracker/utils/location_services.dart';
 
 class WeatherCard extends StatefulWidget {
   final double? lat;
@@ -102,28 +101,4 @@ class _WeatherCardState extends State<WeatherCard> {
     padding: EdgeInsets.only(left: 18.0, right: 31.0, top: 4.0, bottom: 9.0),
     child: Text(text, style: addStick.copyWith(color: secondaryBase)),
   );
-
-  // void getLocationLocal() async {
-  //   // final service = LocationServices();
-
-  //   final locationData = await LocationServices().getLocation();
-  //   print("*************");
-  //   print("*************");
-  //   print("*************");
-  //   print("*************");
-  //   print("*************");
-  //   print(locationData);
-  //   if (locationData != null) {
-  //     setState(() {
-  //       lat = locationData.latitude!.toDouble();
-  //       long = locationData.longitude!.toDouble();
-
-  // _wf.currentWeatherByLocation(lat ?? 0.0, long ?? 0.0).then((w) {
-  //   setState(() {
-  //     _weather = w;
-  //   });
-  // });
-  //     });
-  //   }
-  // }
 }

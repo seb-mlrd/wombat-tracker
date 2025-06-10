@@ -1,4 +1,4 @@
-import 'dart:developer';
+// import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,11 +15,13 @@ class _MapsState extends State<Maps> {
   double? longitude;
   late GoogleMapController mapController;
   bool mapControllerReady = false;
-  // LatLng _center = const LatLng(45.521563, -122.677433);
-  LatLng _center = const LatLng(69.69, -69.69);
+  LatLng _center = const LatLng(45.521563, -122.677433);
+  late LatLng _start;
+  late LatLng _end;
   LocationData? locationInitialData;
   LocationData? locationFinalData;
   Set<Marker> _markers = {};
+  Set<Polyline> _polylines = {};
   bool run = false;
   @override
   void initState() {
@@ -32,6 +34,26 @@ class _MapsState extends State<Maps> {
         print('ouais c\'est michel');
         getFinalLocation();
       }
+    });
+  }
+
+  void _setPolyline() {
+    final List<LatLng> points = [_start];
+    if (_end != null) {
+      points.add(_end);
+    } else {
+      points.add(_center);
+    }
+
+    final Polyline polyline = Polyline(
+      polylineId: PolylineId("route"),
+      color: Colors.blueAccent,
+      width: 5,
+      points: points,
+    );
+
+    setState(() {
+      _polylines.add(polyline);
     });
   }
 
@@ -64,6 +86,7 @@ class _MapsState extends State<Maps> {
     return GoogleMap(
       onMapCreated: _onMapCreated,
       initialCameraPosition: CameraPosition(target: _center, zoom: 15.0),
+      polylines: _polylines,
       markers: _markers,
     );
   }
@@ -72,7 +95,6 @@ class _MapsState extends State<Maps> {
     final service = LocationServices();
 
     final locationData = await service.getLocation();
-    print("maps.dart *************************");
     print(locationData);
     if (locationData != null) {
       setState(() {
@@ -94,17 +116,16 @@ class _MapsState extends State<Maps> {
     locationInitialData = await service.getInitialLocation();
     if (locationInitialData != null) {
       setState(() {
+        _start = LatLng(locationInitialData!.latitude!.toDouble(),locationInitialData!.longitude!.toDouble());
         _markers.add(
           Marker(
             markerId: MarkerId("Position de départ"),
-            position: LatLng(
-              locationInitialData!.latitude!.toDouble(),
-              locationInitialData!.longitude!.toDouble(),
-            ),
+            position: _start,
             infoWindow: InfoWindow(title: "Position de départ"),
           ),
         );
         run = true;
+        _setPolyline();
       });
     }
 
@@ -116,20 +137,26 @@ class _MapsState extends State<Maps> {
     locationFinalData = await service.getLocation();
     if (locationFinalData != null) {
       setState(() {
+        _end = LatLng(locationFinalData!.latitude!.toDouble(),locationFinalData!.longitude!.toDouble());
         _markers.add(
           Marker(
             markerId: MarkerId("Position de fin"),
-            position: LatLng(
-              locationFinalData!.latitude!.toDouble(),
-              locationFinalData!.longitude!.toDouble(),
-            ),
+            position: _end,
             infoWindow: InfoWindow(title: "Position de fin"),
           ),
         );
         run = false;
+        _setPolyline();
       });
     }
 
     return locationInitialData;
   }
 }
+
+// pour clear les polylines
+
+// setState(() {
+//   _polylines.clear();
+//   _polylines.add(polyline);
+// });
