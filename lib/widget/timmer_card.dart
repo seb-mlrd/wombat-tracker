@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
+import 'package:wombat_tracker/screen/end_run.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/location_services.dart';
 
@@ -99,6 +100,14 @@ class _MyTimmerState extends State<MyTimmer> {
                           _playTimer = false;
                           _time = false;
                           LocationServices.setRunReady(false);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) {
+                                return EndRun();
+                              },
+                            ),
+                          );
                         });
                       },
                       style: FilledButton.styleFrom(
