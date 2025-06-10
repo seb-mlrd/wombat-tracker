@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:weather/weather.dart';
-import 'package:wombat_tracker/consts.dart';
+import 'package:wombat_tracker/secret/open_weather_api_secret.dart';
 import 'package:wombat_tracker/styles.dart';
 
 class WeatherCard extends StatefulWidget {
@@ -14,7 +14,7 @@ class WeatherCard extends StatefulWidget {
 }
 
 class _WeatherCardState extends State<WeatherCard> {
-  final WeatherFactory _wf = WeatherFactory(OPENWEATHE_RAPI_KEY);
+  final WeatherFactory _wf = WeatherFactory(OPENWEATHER_API_KEY);
   Weather? _weather;
   late double? lat, long;
   @override
