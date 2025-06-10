@@ -1,1 +1,0 @@
-const OPENWEATHE_RAPI_KEY = "b07216aaf71ac12eba6bbfd522b812bf";
