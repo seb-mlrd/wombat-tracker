@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
 import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
 import 'package:intl/date_symbol_data_local.dart';
+import 'package:geolocator/geolocator.dart';
 
 class EndRun extends StatefulWidget {
-  // final String distance;
-  // final String time;
+  // final List<double> distance;
+  // final int time;
+
   const EndRun({
     super.key,
     // required this.distance,
@@ -28,6 +31,29 @@ class _EndRunState extends State<EndRun> {
     });
   }
 
+  List<LatLng> points = [
+    LatLng(48.8566, 2.3522), // Paris
+    LatLng(49.0, 2.5),
+    LatLng(50.0, 3.0),
+    LatLng(51.5074, -0.1278), // Londres
+  ];
+
+  // Fonction pour calculer la distance totale le long des points (en mètres)
+  double totalDistance(List<LatLng> points) {
+    double total = 0.0;
+
+    for (int i = 0; i < points.length - 1; i++) {
+      total += Geolocator.distanceBetween(
+        points[i].latitude,
+        points[i].longitude,
+        points[i + 1].latitude,
+        points[i + 1].longitude,
+      );
+    }
+
+    return total;
+  }
+
   @override
   void initState() {
     super.initState();
@@ -35,6 +61,10 @@ class _EndRunState extends State<EndRun> {
       getDate();
     });
     getDate();
+    double distance = totalDistance(points);
+    print("Distance totale du trajet : ${distance / 1000} km");
+    // var speed = (distance / 1000) / widget.time;
+    // print("la vitesse est de $speed km/h");
   }
 
   @override
