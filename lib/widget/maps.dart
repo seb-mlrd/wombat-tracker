@@ -39,7 +39,7 @@ class _MapsState extends State<Maps> {
   }
 
   void startLocationTracking() {
-    _locationUpdateTimer = Timer.periodic(Duration(seconds: 30), (timer) async {
+    _locationUpdateTimer = Timer.periodic(Duration(seconds: 10), (timer) async {
       final service = LocationServices();
       final newLocation = await service.getLocation();
 
@@ -118,6 +118,7 @@ class _MapsState extends State<Maps> {
 
         _markers.add(Marker(markerId: MarkerId("Moi"), position: _center));
       });
+      print(_markers);
     }
   }
 
@@ -127,12 +128,13 @@ class _MapsState extends State<Maps> {
     if (locationInitialData != null) {
       setState(() {
         _start = LatLng(locationInitialData!.latitude!.toDouble(),locationInitialData!.longitude!.toDouble());
+        _markers.removeWhere((marker) => marker.markerId.value == "Moi");
         _markers.add(
           Marker(
             markerId: MarkerId("Position de départ"),
             position: _start,
             infoWindow: InfoWindow(title: "Position de départ"),
-          ),
+          ), 
         );
         run = true;
         points.add(_start);
