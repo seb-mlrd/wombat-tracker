@@ -1,5 +1,5 @@
 // import 'dart:developer';
-
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
@@ -22,6 +22,8 @@ class _MapsState extends State<Maps> {
   LocationData? locationFinalData;
   Set<Marker> _markers = {};
   Set<Polyline> _polylines = {};
+  final List<LatLng> points = [];
+  Timer? _locationUpdateTimer;
   bool run = false;
   @override
   void initState() {
@@ -31,31 +33,39 @@ class _MapsState extends State<Maps> {
       if (LocationServices.runReady.value) {
         getInitialLocation();
       } else if (!LocationServices.runReady.value && run) {
-        print('ouais c\'est michel');
         getFinalLocation();
       }
     });
   }
 
-  void _setPolyline() {
-    final List<LatLng> points = [_start];
-    if (_end != null) {
-      points.add(_end);
-    } else {
-      points.add(_center);
-    }
+  void startLocationTracking() {
+    _locationUpdateTimer = Timer.periodic(Duration(seconds: 30), (timer) async {
+      final service = LocationServices();
+      final newLocation = await service.getLocation();
 
-    final Polyline polyline = Polyline(
-      polylineId: PolylineId("route"),
-      color: Colors.blueAccent,
-      width: 5,
-      points: points,
-    );
+      if (newLocation != null) {
+        final newPoint = LatLng(
+          newLocation.latitude!.toDouble(),
+          newLocation.longitude!.toDouble(),
+        );
 
-    setState(() {
-      _polylines.add(polyline);
+        setState(() {
+          points.add(newPoint);
+
+          _polylines.clear();
+          _polylines.add(
+            Polyline(
+              polylineId: PolylineId("route"),
+              color: Colors.blueAccent,
+              width: 5,
+              points: List<LatLng>.from(points),
+            ),
+          );
+        });
+      }
     });
   }
+
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -73,7 +83,7 @@ class _MapsState extends State<Maps> {
             position: LatLng(latitude!, longitude!),
             infoWindow: InfoWindow(
               title:
-                  "lat: ${locationInitialData!.altitude.toString()} and long ${locationInitialData!.longitude.toString()}",
+                  "Moi",
             ),
           ),
         );
@@ -125,7 +135,8 @@ class _MapsState extends State<Maps> {
           ),
         );
         run = true;
-        _setPolyline();
+        points.add(_start);
+        startLocationTracking();
       });
     }
 
@@ -146,7 +157,7 @@ class _MapsState extends State<Maps> {
           ),
         );
         run = false;
-        _setPolyline();
+        _locationUpdateTimer?.cancel();
       });
     }
 
