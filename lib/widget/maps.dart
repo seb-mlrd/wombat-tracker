@@ -9,12 +9,14 @@ class Maps extends StatefulWidget {
   @override
   State<Maps> createState() => _MapsState();
 }
+
 class _MapsState extends State<Maps> {
   double? latitude;
   double? longitude;
   late GoogleMapController mapController;
   bool mapControllerReady = false;
-  LatLng _center = const LatLng(45.521563, -122.677433);
+  // LatLng _center = const LatLng(45.521563, -122.677433);
+  LatLng _center = const LatLng(69.69, -69.69);
   LocationData? locationInitialData;
   LocationData? locationFinalData;
   Set<Marker> _markers = {};
@@ -26,13 +28,13 @@ class _MapsState extends State<Maps> {
     LocationServices.runReady.addListener(() {
       if (LocationServices.runReady.value) {
         getInitialLocation();
-      }else if(!LocationServices.runReady.value && run){
+      } else if (!LocationServices.runReady.value && run) {
         print('ouais c\'est michel');
-          getFinalLocation();
+        getFinalLocation();
       }
     });
   }
-  
+
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
     mapControllerReady = true;
@@ -47,7 +49,10 @@ class _MapsState extends State<Maps> {
           Marker(
             markerId: MarkerId("Moi"),
             position: LatLng(latitude!, longitude!),
-            infoWindow: InfoWindow(title: "lat: ${locationInitialData!.altitude.toString()} and long ${locationInitialData!.longitude.toString()}")
+            infoWindow: InfoWindow(
+              title:
+                  "lat: ${locationInitialData!.altitude.toString()} and long ${locationInitialData!.longitude.toString()}",
+            ),
           ),
         );
       });
@@ -58,10 +63,7 @@ class _MapsState extends State<Maps> {
   Widget build(BuildContext context) {
     return GoogleMap(
       onMapCreated: _onMapCreated,
-      initialCameraPosition: CameraPosition(
-        target: _center,
-        zoom: 15.0,
-      ),
+      initialCameraPosition: CameraPosition(target: _center, zoom: 15.0),
       markers: _markers,
     );
   }
@@ -70,6 +72,8 @@ class _MapsState extends State<Maps> {
     final service = LocationServices();
 
     final locationData = await service.getLocation();
+    print("maps.dart *************************");
+    print(locationData);
     if (locationData != null) {
       setState(() {
         latitude = locationData.latitude!.toDouble();
@@ -77,17 +81,10 @@ class _MapsState extends State<Maps> {
         _center = LatLng(latitude!, longitude!);
 
         if (mapControllerReady) {
-          mapController.animateCamera(
-            CameraUpdate.newLatLng(_center),
-          );
+          mapController.animateCamera(CameraUpdate.newLatLng(_center));
         }
 
-        _markers.add(
-          Marker(
-            markerId: MarkerId("Moi"),
-            position: _center,
-          ),
-        );
+        _markers.add(Marker(markerId: MarkerId("Moi"), position: _center));
       });
     }
   }
@@ -135,5 +132,4 @@ class _MapsState extends State<Maps> {
 
     return locationInitialData;
   }
-
 }

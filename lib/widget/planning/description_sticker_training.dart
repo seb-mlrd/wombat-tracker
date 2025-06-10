@@ -14,7 +14,7 @@ class DescriptionStickerTraining extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 24),
+      padding: EdgeInsets.only(left: 24, top: 24, bottom: 16),
       width: double.infinity,
       color: quatrenaryBase,
 
@@ -26,14 +26,14 @@ class DescriptionStickerTraining extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: EdgeInsets.only(left: 8),
+                padding: EdgeInsets.only(left: 32),
                 child: Text(
                   firstTrain,
                   style: subSubSubTitle.copyWith(color: primaryBase),
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 8),
+                padding: EdgeInsets.only(left: 32),
                 child: Text(
                   secondTrain,
                   style: subSubSubTitle.copyWith(color: primaryBase),

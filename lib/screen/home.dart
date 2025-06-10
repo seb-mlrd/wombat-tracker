@@ -7,7 +7,6 @@ import 'package:wombat_tracker/widget/weather_card.dart';
 import '../widget/wombat_banner.dart';
 
 class Home extends StatefulWidget {
-
   const Home({super.key});
 
   @override
@@ -15,12 +14,25 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  String? lat,long;
+  late double? lat, long = 0.0;
+  bool isReady = false;
   @override
-  void initState()
-  {
+  void initState() {
     super.initState();
-    getLocation();
+    getLocationLocal();
+  }
+
+  void getLocationLocal() async {
+    final locationData = await LocationServices().getLocation();
+    print("location data !!!!!!!!!!!!!!!!!!!!!!");
+
+    if (locationData != null) {
+      setState(() {
+        lat = locationData.latitude;
+        long = locationData.longitude;
+        isReady = true;
+      });
+    }
   }
 
   // Future<void> _getLocation() async {
@@ -67,39 +79,30 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
-      backgroundColor: primaryBase,
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              WombatBanner(),
-              WeatherCard(),
-              SizedBox(height: 64),
-              MyTimmer(),
-              SizedBox(height: 64),
-              SizedBox(
-                height: 300,
-                child: Maps(),
-              ),
-              SizedBox(height: 64),
-            ],
+    if (!isReady) {
+      return Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Center(child: const CircularProgressIndicator()),
+      );
+    } else {
+      return Scaffold(
+        backgroundColor: primaryBase,
+        body: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                WombatBanner(),
+                WeatherCard(lat: lat, long: long),
+                SizedBox(height: 64),
+                MyTimmer(),
+                SizedBox(height: 64),
+                SizedBox(height: 300, child: Maps()),
+                SizedBox(height: 64),
+              ],
+            ),
           ),
         ),
-      ),
-    );
-  }
-
-  void getLocation() async {
-    final service = LocationServices();
-
-    final locationData = await service.getLocation();
-
-    if(locationData != null){
-      setState(() {
-        lat = locationData.latitude!.toString();
-        long = locationData.longitude!.toString();
-      });
+      );
     }
   }
 }
