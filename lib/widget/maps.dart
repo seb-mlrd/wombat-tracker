@@ -6,6 +6,13 @@ import 'package:location/location.dart';
 import 'package:wombat_tracker/utils/location_services.dart';
 
 class Maps extends StatefulWidget {
+  // ---------gpt--------------
+  final List<LatLng> points;
+  final Function(List<LatLng>) onPointsChanged;
+  const Maps({Key? key, required this.points, required this.onPointsChanged})
+    : super(key: key);
+  // ---------gpt--------------
+
   @override
   State<Maps> createState() => _MapsState();
 }
@@ -22,12 +29,18 @@ class _MapsState extends State<Maps> {
   LocationData? locationFinalData;
   Set<Marker> _markers = {};
   Set<Polyline> _polylines = {};
-  final List<LatLng> points = [];
+  // -----gpt-----
+  // final List<LatLng> points = [];
+  late List<LatLng> points;
+  // -----gpt-----
   Timer? _locationUpdateTimer;
   bool run = false;
   @override
   void initState() {
     super.initState();
+    // ---------gpt--------------
+    points = List.from(widget.points);
+    // ---------gpt--------------
     getLocation();
     LocationServices.runReady.addListener(() {
       if (LocationServices.runReady.value) {
@@ -48,6 +61,9 @@ class _MapsState extends State<Maps> {
           newLocation.latitude!.toDouble(),
           newLocation.longitude!.toDouble(),
         );
+        // -----gpt----
+        // addPoint(newPoint);
+        // -----gpt----
 
         setState(() {
           points.add(newPoint);
@@ -61,11 +77,13 @@ class _MapsState extends State<Maps> {
               points: List<LatLng>.from(points),
             ),
           );
+          // -----gpt-----
+          widget.onPointsChanged(points);
+          // -----gpt-----
         });
       }
     });
   }
-
 
   void _onMapCreated(GoogleMapController controller) {
     mapController = controller;
@@ -81,10 +99,7 @@ class _MapsState extends State<Maps> {
           Marker(
             markerId: MarkerId("Moi"),
             position: LatLng(latitude!, longitude!),
-            infoWindow: InfoWindow(
-              title:
-                  "Moi",
-            ),
+            infoWindow: InfoWindow(title: "Moi"),
           ),
         );
       });
@@ -127,14 +142,17 @@ class _MapsState extends State<Maps> {
     locationInitialData = await service.getInitialLocation();
     if (locationInitialData != null) {
       setState(() {
-        _start = LatLng(locationInitialData!.latitude!.toDouble(),locationInitialData!.longitude!.toDouble());
+        _start = LatLng(
+          locationInitialData!.latitude!.toDouble(),
+          locationInitialData!.longitude!.toDouble(),
+        );
         _markers.removeWhere((marker) => marker.markerId.value == "Moi");
         _markers.add(
           Marker(
             markerId: MarkerId("Position de départ"),
             position: _start,
             infoWindow: InfoWindow(title: "Position de départ"),
-          ), 
+          ),
         );
         run = true;
         points.add(_start);
@@ -150,7 +168,10 @@ class _MapsState extends State<Maps> {
     locationFinalData = await service.getLocation();
     if (locationFinalData != null) {
       setState(() {
-        _end = LatLng(locationFinalData!.latitude!.toDouble(),locationFinalData!.longitude!.toDouble());
+        _end = LatLng(
+          locationFinalData!.latitude!.toDouble(),
+          locationFinalData!.longitude!.toDouble(),
+        );
         _markers.add(
           Marker(
             markerId: MarkerId("Position de fin"),

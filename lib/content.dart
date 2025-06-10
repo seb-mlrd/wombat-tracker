@@ -50,7 +50,7 @@ class _ContentState extends State<Content> {
       _screenList = [
         const Community(),
         const Planning(),
-        const Home(),
+        Home(profils: profils),
         Profil(user: currentUser, profils: profils),
         Research(currentUser: profils),
       ];

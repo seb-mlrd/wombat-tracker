@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stop_watch_timer/stop_watch_timer.dart';
 import 'package:wombat_tracker/screen/end_run.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/location_services.dart';
 
 class MyTimmer extends StatefulWidget {
+  final List<dynamic> profils;
+  final List<LatLng> points;
+  const MyTimmer({Key? key, required this.points, required this.profils}) : super(key: key);
   @override
   _MyTimmerState createState() => _MyTimmerState();
 }
@@ -106,7 +110,14 @@ class _MyTimmerState extends State<MyTimmer> {
                             context,
                             MaterialPageRoute(
                               builder: (context) {
-                                return EndRun();
+                                // -----gpt----
+                                // return EndRun(timeRun: timeRun);
+                                return EndRun(
+                                  timeRun: timeRun,
+                                  points: widget.points,
+                                  profils: widget.profils,
+                                );
+                                // -----gpt----
                               },
                             ),
                           );

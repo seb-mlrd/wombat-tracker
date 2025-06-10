@@ -25,16 +25,17 @@ classDiagram
 
     class Stats {
         +int id
-        +String time
-        +int distance
-        +int speed
-        +String location
-        +int id_user
-        +DateTime date
-        +getStatsByUser(int id_user)
-        +setStatsByUser(int id_user)
+        +double time
+        +double distance
+        +double speed
+        +int idUser
+        +String date
         +toJson()
         +fromJson()
+    }
+    class StatsNetwork{
+        +loadStatsByIdUsers(int idUser)
+        +fetchStats(Map data)
     }
 
     class FriendRelation {
@@ -81,10 +82,25 @@ classDiagram
     class SequencesNetwork{
         +loadModulesByIdSequence(int idSequence)
     }
+    class Posts{
+        +int id
+        +String post
+        +int idStats
+        +int idUserWhoPost
+        +toJson()
+        +fromJson()
+    }
+    class PostsNetwork{
+        +loadPostsByIdUsers(int idUserWhoConnect)
+        +fetchPostsByIdUsers(int idUserWhoConnect)
+    }
 
     ProfilService "1" -- "*" FriendRelation : isFriend
-    ProfilService --* Stats : has
+    StatsNetwork --* Stats : has
+    ProfilService "1"--"*" StatsNetwork 
+    ProfilService "1"--"*" PostsNetwork 
     ManageUser ..> ProfilService : manages
     ModulesNetwork *-- Modules : contains
     SequencesNetwork *-- Sequences : contains
+    PostsNetwork *-- Posts : contains
 ```

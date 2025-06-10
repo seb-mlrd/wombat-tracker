@@ -2,19 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:wombat_tracker/styles.dart';
+import 'package:wombat_tracker/utils/convert_time.dart';
+import 'package:wombat_tracker/utils/network/stats_network.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
 import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:geolocator/geolocator.dart';
 
 class EndRun extends StatefulWidget {
-  // final List<double> distance;
-  // final int time;
+  final List<LatLng> points;
+  final int timeRun;
+  final List<dynamic> profils;
 
   const EndRun({
     super.key,
-    // required this.distance,
-    // required this.time,
+    required this.timeRun,
+    required this.points,
+    required this.profils,
   });
 
   @override
@@ -23,6 +27,8 @@ class EndRun extends StatefulWidget {
 
 class _EndRunState extends State<EndRun> {
   String dateNow = "";
+  double speed = 0.0;
+  double distance = 0.0;
 
   getDate() {
     DateTime now = DateTime.now();
@@ -30,13 +36,6 @@ class _EndRunState extends State<EndRun> {
       dateNow = DateFormat("EEEE d MMMM y 'à' HH:mm", 'fr_FR').format(now);
     });
   }
-
-  List<LatLng> points = [
-    LatLng(48.8566, 2.3522), // Paris
-    LatLng(49.0, 2.5),
-    LatLng(50.0, 3.0),
-    LatLng(51.5074, -0.1278), // Londres
-  ];
 
   // Fonction pour calculer la distance totale le long des points (en mètres)
   double totalDistance(List<LatLng> points) {
@@ -54,17 +53,42 @@ class _EndRunState extends State<EndRun> {
     return total;
   }
 
+  Future<void> sendData(data) async {
+    await StatsNetwork().fetchStats(data);
+  }
+
+  Future<void> initialize() async {
+    await initializeDateFormatting('fr_FR', null);
+    getDate();
+
+
+    distance = totalDistance(widget.points);
+    speed = (distance / 1000) / widget.timeRun;
+
+    if (widget.profils.isEmpty || widget.profils[0]["id"] == null) return;
+
+    List dataRun = [
+      {
+        "distance": distance.round(),
+        "speed": speed,
+        "date": dateNow,
+        "time": widget.timeRun,
+        "idUser": widget.profils[0]["id"],
+      },
+    ];
+
+    try {
+      await sendData(dataRun);
+      print("✅ Envoi réussi");
+    } catch (e) {
+      print("❌ Envoi échoué : $e");
+    }
+  }
+
   @override
   void initState() {
     super.initState();
-    initializeDateFormatting('fr_FR', null).then((_) {
-      getDate();
-    });
-    getDate();
-    double distance = totalDistance(points);
-    print("Distance totale du trajet : ${distance / 1000} km");
-    // var speed = (distance / 1000) / widget.time;
-    // print("la vitesse est de $speed km/h");
+    initialize();
   }
 
   @override
@@ -93,9 +117,9 @@ class _EndRunState extends State<EndRun> {
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: ThumbnailUser(
-                  avatar: "avatar.png",
-                  firstName: "james",
-                  lastName: "ahmedaly",
+                  avatar: widget.profils[0]["avatar"],
+                  firstName: widget.profils[0]["firstName"],
+                  lastName: widget.profils[0]["lastName"],
                   text: dateNow.isEmpty ? "Chargement..." : dateNow,
                   colorText: quatrenaryBase,
                   fontText: bodyTextMedium,
@@ -110,6 +134,15 @@ class _EndRunState extends State<EndRun> {
                 keyButton: "buttonSharePost",
                 labelInput: "Poster",
                 functionCallBack: () async {
+                  // sendData([
+                  //   {
+                  //     "distance": 0.0,
+                  //     "speed": 0.0,
+                  //     "date": "dateNow",
+                  //     "time": 1,
+                  //     "idUser": widget.profils[0]["id"],
+                  //   },
+                  // ]);
                   print(dateNow.isEmpty ? "Chargement..." : dateNow);
                 },
                 colorButton: quatrenaryBase,
@@ -126,7 +159,19 @@ class _EndRunState extends State<EndRun> {
   Row containerData() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: [dataDistance(), dataTime()],
+      children: [dataDistance(), dataTime(), speedData()],
+    );
+  }
+
+  Column speedData() {
+    return Column(
+      children: [
+        Text("Vitesse", style: subSubTitle.copyWith(color: quatrenaryBase)),
+        Text(
+          "${speed.toStringAsFixed(2)} km/h",
+          style: subSubTitle.copyWith(color: quatrenaryBase),
+        ),
+      ],
     );
   }
 
@@ -134,7 +179,10 @@ class _EndRunState extends State<EndRun> {
     return Column(
       children: [
         Text("Time", style: subSubTitle.copyWith(color: quatrenaryBase)),
-        Text("5.2 km", style: subSubTitle.copyWith(color: quatrenaryBase)),
+        Text(
+          ConvertTime().convertTimeToString(widget.timeRun),
+          style: subSubTitle.copyWith(color: quatrenaryBase),
+        ),
       ],
     );
   }
@@ -143,7 +191,10 @@ class _EndRunState extends State<EndRun> {
     return Column(
       children: [
         Text("Disatnce", style: subSubTitle.copyWith(color: quatrenaryBase)),
-        Text("5.2 km", style: subSubTitle.copyWith(color: quatrenaryBase)),
+        Text(
+          "${(distance / 1000).toStringAsFixed(2)} km",
+          style: subSubTitle.copyWith(color: quatrenaryBase),
+        ),
       ],
     );
   }
