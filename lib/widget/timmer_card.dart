@@ -16,7 +16,7 @@ class _MyTimmerState extends State<MyTimmer> {
   final _isHours = true;
   bool _playTimer = false;
   bool _time = false;
-
+  late int timeRun;
   @override
   void initState() {
     super.initState();
@@ -99,6 +99,8 @@ class _MyTimmerState extends State<MyTimmer> {
                         setState(() {
                           _playTimer = false;
                           _time = false;
+                          timeRun = _stopWatchTimer.rawTime.value;
+                          print(timeRun);
                           LocationServices.setRunReady(false);
                           Navigator.push(
                             context,
