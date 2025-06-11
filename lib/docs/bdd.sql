@@ -1,0 +1,61 @@
+-- WARNING: This schema is for context only and is not meant to be run.
+-- Table order and constraints may not be valid for execution.
+
+-- CREATE TABLE public.friend-relation (
+--   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+--   friendId bigint,
+--   requesterId bigint,
+--   CONSTRAINT friend-relation_pkey PRIMARY KEY (id),
+--   CONSTRAINT friend-relation_friendId_fkey FOREIGN KEY (friendId) REFERENCES public.profil(id),
+--   CONSTRAINT FriendRelation_requestertId_fkey FOREIGN KEY (requesterId) REFERENCES public.profil(id)
+-- );
+-- CREATE TABLE public.modules (
+--   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+--   titleModule character varying NOT NULL,
+--   objectif character varying,
+--   materiel character varying,
+--   CONSTRAINT modules_pkey PRIMARY KEY (id)
+-- );
+-- CREATE TABLE public.posts (
+--   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+--   post character varying,
+--   idStats bigint,
+--   idUserWhoPost bigint,
+--   CONSTRAINT posts_pkey PRIMARY KEY (id),
+--   CONSTRAINT posts_idStats_fkey FOREIGN KEY (idStats) REFERENCES public.stats(id),
+--   CONSTRAINT posts_idUserWhoPost_fkey FOREIGN KEY (idUserWhoPost) REFERENCES public.profil(id)
+-- );
+-- CREATE TABLE public.profil (
+--   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+--   firstName character varying NOT NULL,
+--   lastName character varying NOT NULL,
+--   email character varying NOT NULL,
+--   phone character varying DEFAULT '''NULL''::character'::character varying,
+--   bio text DEFAULT 'NULL'::text,
+--   roles character varying NOT NULL DEFAULT 'user'::character varying,
+--   nbrStick bigint NOT NULL DEFAULT '0'::bigint,
+--   userUuid uuid NOT NULL DEFAULT auth.uid(),
+--   avatar character varying DEFAULT 'avatar.png'::character varying,
+--   CONSTRAINT profil_pkey PRIMARY KEY (id),
+--   CONSTRAINT Profil_userUuid_fkey FOREIGN KEY (userUuid) REFERENCES auth.users(id)
+-- );
+-- CREATE TABLE public.sequences (
+--   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+--   titleSequences character varying NOT NULL,
+--   descriptionSequences json,
+--   duration smallint,
+--   numberOfCircuit smallint,
+--   idModule bigint,
+--   CONSTRAINT sequences_pkey PRIMARY KEY (id),
+--   CONSTRAINT sequences_idModule_fkey FOREIGN KEY (idModule) REFERENCES public.modules(id)
+-- );
+-- CREATE TABLE public.stats (
+--   id bigint GENERATED ALWAYS AS IDENTITY NOT NULL,
+--   distance real,
+--   speed real,
+--   date text,
+--   idUser bigint,
+--   time real,
+--   CONSTRAINT stats_pkey PRIMARY KEY (id),
+--   CONSTRAINT stats_idUser_fkey FOREIGN KEY (idUser) REFERENCES public.profil(id)
+-- );

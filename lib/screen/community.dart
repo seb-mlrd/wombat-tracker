@@ -28,8 +28,8 @@ class _CommunityState extends State<Community> {
   @override
   void initState() {
     super.initState();
-    allPostsFuture = loadAllPosts();
-    print(allPostsFuture);
+    // allPostsFuture = loadAllPosts();
+    // print(loadAllPosts());
 
     // print(allPostsFuture);
   }
