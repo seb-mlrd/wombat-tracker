@@ -10,8 +10,10 @@ import 'package:wombat_tracker/screen/edit_profil.dart';
 // style
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/auth_services.dart';
+import 'package:wombat_tracker/utils/convert_time.dart';
 import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
+import 'package:wombat_tracker/utils/network/stats_network.dart';
 
 // widget
 import 'package:wombat_tracker/widget/avatar.dart';
@@ -35,6 +37,8 @@ class _ProfilState extends State<Profil> {
   final SupabaseClient supabaseClient = Supabase.instance.client;
   List<dynamic> profils = [];
   List<dynamic> friends = [];
+  List<dynamic> stats = [];
+  double speed = 0.0;
 
   @override
   void initState() {
@@ -45,8 +49,14 @@ class _ProfilState extends State<Profil> {
 
   Future<void> initializeData() async {
     final fetchedFriends = await FriendRelation.getFriend(profils[0]["id"]);
+    final fetchStats = await StatsNetwork().loadBestStatsByIdUsers(
+      profils[0]["id"],
+    );
+
     setState(() {
       friends = fetchedFriends;
+      stats = fetchStats;
+      print(stats);
     });
   }
 
@@ -237,17 +247,28 @@ class _ProfilState extends State<Profil> {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: [
-          LabelStat(pictureLink: "assets/img/time.png", textStat: "--:--:--"),
+          LabelStat(
+            pictureLink: "assets/img/time.png",
+            textStat: stats.isNotEmpty
+                ? ConvertTime().convertTimeToStringCompressed(stats[0]["time"])
+                : "--:--:--",
+          ),
           SizedBox(
             height: 12,
             child: VerticalDivider(thickness: 1, color: secondaryBase),
           ),
-          LabelStat(pictureLink: 'assets/img/distance.png', textStat: "-- km"),
+          LabelStat(
+            pictureLink: 'assets/img/distance.png',
+            textStat: stats.isNotEmpty ? "${stats[0]["distance"]} km" : "-- km",
+          ),
           SizedBox(
             height: 12,
             child: VerticalDivider(thickness: 1, color: secondaryBase),
           ),
-          LabelStat(pictureLink: 'assets/img/speed.png', textStat: "-- km/h"),
+          LabelStat(
+            pictureLink: 'assets/img/speed.png',
+            textStat: stats.isNotEmpty ? "${stats[0]["speed"]} km/h" : "--",
+          ),
         ],
       ),
     );

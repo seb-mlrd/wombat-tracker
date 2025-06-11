@@ -26,12 +26,12 @@ class Stats {
 
   factory Stats.fromJson(Map<String, dynamic> json) {
     return Stats(
-      date: json["date"],
-      distance: json["distance"],
       id: json["id"],
-      idUser: json["idUser"],
-      speed: json["speed"],
       time: json["time"],
+      distance: json["distance"],
+      speed: json["speed"],
+      date: json["date"],
+      idUser: json["idUser"],
     );
   }
 }

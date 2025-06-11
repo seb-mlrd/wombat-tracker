@@ -48,7 +48,7 @@ class _ContentState extends State<Content> {
       return const Scaffold(body: Center(child: CircularProgressIndicator()));
     } else {
       _screenList = [
-        const Community(),
+        Community(profils: profils),
         const Planning(),
         Home(profils: profils),
         Profil(user: currentUser, profils: profils),

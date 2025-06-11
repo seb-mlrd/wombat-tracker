@@ -1,10 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:wombat_tracker/styles.dart';
+import 'package:wombat_tracker/utils/class/posts.dart';
+import 'package:wombat_tracker/utils/friend_relation.dart';
+import 'package:wombat_tracker/utils/network/posts_network.dart';
 import 'package:wombat_tracker/widget/app_bar_wombat.dart';
 import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
 
-class Community extends StatelessWidget {
-  const Community({super.key});
+class Community extends StatefulWidget {
+  final List<dynamic> profils;
+  const Community({super.key, required this.profils});
+
+  @override
+  State<Community> createState() => _CommunityState();
+}
+
+class _CommunityState extends State<Community> {
+  late Future<List<Posts>> allPostsFuture;
+
+  Future<List<Posts>> loadAllPosts() async {
+    final friendsList = await FriendRelation.getFriend(widget.profils[0]["id"]);
+    return await PostsNetwork().loadPostsByIdUsers(
+      widget.profils[0]["id"],
+      friendsList,
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    allPostsFuture = loadAllPosts();
+    print(allPostsFuture);
+
+    // print(allPostsFuture);
+  }
 
   @override
   Widget build(BuildContext context) {

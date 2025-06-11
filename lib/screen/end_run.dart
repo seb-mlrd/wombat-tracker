@@ -3,6 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/convert_time.dart';
+import 'package:wombat_tracker/utils/network/posts_network.dart';
 import 'package:wombat_tracker/utils/network/stats_network.dart';
 import 'package:wombat_tracker/widget/button_cta.dart';
 import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
@@ -29,6 +30,7 @@ class _EndRunState extends State<EndRun> {
   String dateNow = "";
   double speed = 0.0;
   double distance = 0.0;
+  late int idStats;
 
   getDate() {
     DateTime now = DateTime.now();
@@ -54,16 +56,15 @@ class _EndRunState extends State<EndRun> {
   }
 
   Future<void> sendData(data) async {
-    await StatsNetwork().fetchStats(data);
+    idStats = await StatsNetwork().fetchStats(data);
   }
 
   Future<void> initialize() async {
     await initializeDateFormatting('fr_FR', null);
     getDate();
 
-
     distance = totalDistance(widget.points);
-    speed = (distance / 1000) / widget.timeRun;
+    speed = (distance / 1000) / (widget.timeRun / 3600000);
 
     if (widget.profils.isEmpty || widget.profils[0]["id"] == null) return;
 
@@ -134,16 +135,14 @@ class _EndRunState extends State<EndRun> {
                 keyButton: "buttonSharePost",
                 labelInput: "Poster",
                 functionCallBack: () async {
-                  // sendData([
-                  //   {
-                  //     "distance": 0.0,
-                  //     "speed": 0.0,
-                  //     "date": "dateNow",
-                  //     "time": 1,
-                  //     "idUser": widget.profils[0]["id"],
-                  //   },
-                  // ]);
-                  print(dateNow.isEmpty ? "Chargement..." : dateNow);
+                  List dataPost = [
+                    {
+                      "idStats": idStats,
+                      "idUserWhoPost": widget.profils[0]["id"],
+                    },
+                  ];
+                  await PostsNetwork().fetchPostsByIdUsers(dataPost);
+                  Navigator.pop(context);
                 },
                 colorButton: quatrenaryBase,
                 colorLabelbutton: primaryBase,

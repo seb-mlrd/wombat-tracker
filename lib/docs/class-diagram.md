@@ -92,7 +92,7 @@ classDiagram
     }
     class PostsNetwork{
         +loadPostsByIdUsers(int idUserWhoConnect)
-        +fetchPostsByIdUsers(int idUserWhoConnect)
+        +fetchPostsByIdUsers(List data, int idUserWhoConnect)
     }
 
     ProfilService "1" -- "*" FriendRelation : isFriend
