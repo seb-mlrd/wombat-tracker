@@ -10,6 +10,6 @@ class ConvertTime {
     int seconds = (timeInMilliseconds ~/ 1000) % 60;
     int minutes = (seconds ~/ (1000 * 60)) % 60;
     int hours = minutes ~/ (1000 * 60 * 60);
-    return '$hours--$minutes--$seconds';
+    return '$hours:$minutes:$seconds';
   }
 }

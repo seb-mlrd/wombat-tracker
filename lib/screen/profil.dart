@@ -14,6 +14,7 @@ import 'package:wombat_tracker/utils/convert_time.dart';
 import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
 import 'package:wombat_tracker/utils/network/stats_network.dart';
+import 'package:wombat_tracker/utils/text_services.dart';
 
 // widget
 import 'package:wombat_tracker/widget/avatar.dart';
@@ -230,7 +231,7 @@ class _ProfilState extends State<Profil> {
       padding: EdgeInsets.symmetric(vertical: 24),
       width: double.infinity,
       decoration: boxDecorationCardProfil(),
-      child: cardStat(),
+      child: cardStat(stats[0]["speed"], stats[0]["distance"]),
     );
   }
 
@@ -241,7 +242,7 @@ class _ProfilState extends State<Profil> {
     );
   }
 
-  Center cardStat() {
+  Center cardStat(double speed, int distance) {
     return Center(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -259,7 +260,9 @@ class _ProfilState extends State<Profil> {
           ),
           LabelStat(
             pictureLink: 'assets/img/distance.png',
-            textStat: stats.isNotEmpty ? "${stats[0]["distance"]} km" : "-- km",
+            textStat: stats.isNotEmpty
+                ? "${TextServices.truncateInt((distance / 1000).toString(), 3)} km"
+                : "-- km",
           ),
           SizedBox(
             height: 12,
@@ -267,7 +270,9 @@ class _ProfilState extends State<Profil> {
           ),
           LabelStat(
             pictureLink: 'assets/img/speed.png',
-            textStat: stats.isNotEmpty ? "${stats[0]["speed"]} km/h" : "--",
+            textStat: stats.isNotEmpty
+                ? "${TextServices.truncateInt(speed.toString(), 3)} km/h"
+                : "--",
           ),
         ],
       ),
