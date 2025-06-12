@@ -3,7 +3,7 @@ class ConvertTime {
     double seconds = (timeInMilliseconds / 1000) % 60;
     double minutes = (seconds / (1000 * 60)) % 60;
     double hours = minutes / (1000 * 60 * 60);
-    return '${hours.toStringAsFixed(2)} h ${minutes.toStringAsFixed(2)} min ${seconds.toStringAsFixed(2)} s';
+    return '${hours.toStringAsFixed(0)} h ${minutes.toStringAsFixed(0)} min ${seconds.toStringAsFixed(2)} s';
   }
 
   String convertTimeToStringCompressed(int timeInMilliseconds) {
