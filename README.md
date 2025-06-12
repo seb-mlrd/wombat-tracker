@@ -45,7 +45,7 @@ _Document complémentaire :_ [`bdd.md`](lib/docs/bdd.md)
 
 Ce diagramme UML montre les relations entre les principales classes de l’application :
 
-![Diagramme de classes lib/docs/class_diagram.md](lib/docs/class_diagram.md)
+![Diagramme de classes](lib/docs/class_diagram.md)
 
 ## 🔁 Cas d'utilisation
 
