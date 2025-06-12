@@ -45,7 +45,7 @@ _Document complémentaire :_ [`bdd.md`](lib/docs/bdd.md)
 
 Ce diagramme UML montre les relations entre les principales classes de l’application :
 
-![Diagramme de classes](lib/docs/class_diagram.md)
+![Diagramme de classes lib/docs/class_diagram.md](lib/docs/class_diagram.md)
 
 ## 🔁 Cas d'utilisation
 
@@ -65,7 +65,7 @@ Ce diagramme UML montre les relations entre les principales classes de l’appli
 
 | Écran de connexion | Écran d'inscription | Écran d'accueil |
 |--------------------|----------|------------------|
-| ![](docs/screen/connexion.png) | ![](docs/screen/inscription.png) | ![](docs/screen/home1.png) |
+| ![](lib/docs/screen/connexion.png) | ![](lib/docs/screen/insrcription.png) | ![](lib/docs/screen/home1.png) |
 
 ## ⚙️ Installation
 
