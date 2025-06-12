@@ -1,5 +1,9 @@
+// lib/widget/form/label_form.dart
+
 import 'package:flutter/material.dart';
-import '../styles.dart';
+
+// styles 
+import '../../styles.dart';
 
 
 class LabelForm extends StatelessWidget {

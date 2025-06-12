@@ -1,4 +1,8 @@
+// lib/planning/title_sticker_training.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import 'package:wombat_tracker/styles.dart';
 
 class TitleStickerTraining extends StatelessWidget {

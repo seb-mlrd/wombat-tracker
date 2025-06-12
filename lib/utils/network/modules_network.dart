@@ -1,4 +1,8 @@
+// lib/utils/class/modules_network.dart
+
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+// utils/class 
 import 'package:wombat_tracker/utils/class/modules.dart';
 
 class ModulesNetwork {

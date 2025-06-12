@@ -28,7 +28,7 @@ Application de running en Flutter pour consulter les scores et les statistiques 
 
 ## 🏗️ Architecture technique
 
-- `utils/` : Appels API, validateurs, helpers
+- `utils/` : Appels API, validateurs, fonctions
 - `test/` : Tests des widgets et fonctions utilitaires
 - `widget/` : Composants réutilisables
 - `screen/` : Pages principales de l'application
@@ -37,7 +37,7 @@ Application de running en Flutter pour consulter les scores et les statistiques 
 
 Voici la structure de la base de données Supabase :
 
-![Modélisation de la BDD](lib/docs/bdd.png)
+![Modélisation de la BDD](lib/docs/bdd_supabase.png)
 
 _Document complémentaire :_ [`bdd.md`](lib/docs/bdd.md)
 
@@ -45,7 +45,7 @@ _Document complémentaire :_ [`bdd.md`](lib/docs/bdd.md)
 
 Ce diagramme UML montre les relations entre les principales classes de l’application :
 
-![Diagramme de classes](lib/docs/class-diagram.md)
+![Diagramme de classes](lib/docs/class_diagram.md)
 
 ## 🔁 Cas d'utilisation
 
@@ -63,9 +63,9 @@ Ce diagramme UML montre les relations entre les principales classes de l’appli
 
 ## 🖼️ Captures d’écran
 
-| Écran de recherche | Résultat | Demande envoyée |
+| Écran de connexion | Écran d'inscription | Écran d'accueil |
 |--------------------|----------|------------------|
-| ![](docs/screen1.png) | ![](docs/screen2.png) | ![](docs/screen3.png) |
+| ![](lib/docs/screen/connexion.png) | ![](lib/docs/screen/insrcription.png) | ![](lib/docs/screen/home1.png) |
 
 ## ⚙️ Installation
 
@@ -79,8 +79,7 @@ Ce diagramme UML montre les relations entre les principales classes de l’appli
 
 ## 🛠️ Technologies utilisées
 
-- Flutter 3.x
-- Dart
+- Flutter 
 - Supabase
 
 

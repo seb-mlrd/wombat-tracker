@@ -1,14 +1,22 @@
+// lib/screen/content/home.dart
+
 import 'package:flutter/material.dart';
+
+// package externe 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/location_services.dart';
-import 'package:wombat_tracker/widget/maps.dart';
-import 'package:wombat_tracker/widget/timmer_card.dart';
-import 'package:wombat_tracker/widget/weather_card.dart';
-import '../widget/wombat_banner.dart';
+
+// styles 
+import 'package:wombat_tracker/styles.dart';
+
+// widget 
+import 'package:wombat_tracker/widget/home/maps.dart';
+import 'package:wombat_tracker/widget/home/timmer_card.dart';
+import 'package:wombat_tracker/widget/home/weather_card.dart';
+import '../../widget/banner/wombat_banner.dart';
 
 class Home extends StatefulWidget {
-    final List<dynamic> profils;
+  final List<dynamic> profils;
 
   const Home({super.key, required this.profils});
 
@@ -20,7 +28,6 @@ class _HomeState extends State<Home> {
   late double? lat, long = 0.0;
   bool isReady = false;
 
-  // ----------------gpt------------------
   List<LatLng> points = [];
 
   // Fonction pour recevoir la liste mise à jour de Maps
@@ -29,7 +36,6 @@ class _HomeState extends State<Home> {
       points = newPoints;
     });
   }
-  // ----------------gpt------------------
 
   @override
   void initState() {
@@ -39,7 +45,6 @@ class _HomeState extends State<Home> {
 
   void getLocationLocal() async {
     final locationData = await LocationServices().getLocation();
-    print("location data !!!!!!!!!!!!!!!!!!!!!!");
 
     if (locationData != null) {
       setState(() {
@@ -69,8 +74,10 @@ class _HomeState extends State<Home> {
                 SizedBox(height: 64),
                 MyTimmer(points: points, profils: widget.profils),
                 SizedBox(height: 64),
-                SizedBox(height: 300, child: Maps(points: points,
-                    onPointsChanged: updatePoints,)),
+                SizedBox(
+                  height: 300,
+                  child: Maps(points: points, onPointsChanged: updatePoints),
+                ),
                 SizedBox(height: 64),
               ],
             ),

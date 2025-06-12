@@ -1,3 +1,5 @@
+// lib/utils/friend_relation.dart
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class FriendRelation {

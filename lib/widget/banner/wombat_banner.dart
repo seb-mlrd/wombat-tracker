@@ -1,5 +1,9 @@
+// lib/banner/wombat_banner.dart
+
 import 'package:flutter/material.dart';
-import '../styles.dart';
+
+// styles 
+import '../../styles.dart';
 
 class WombatBanner extends StatelessWidget {
   const WombatBanner({super.key});

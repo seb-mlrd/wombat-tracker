@@ -1,4 +1,8 @@
+// lib/profil/user_bio.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import '../../styles.dart';
 
 class UserBio extends StatelessWidget {

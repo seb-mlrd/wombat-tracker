@@ -1,4 +1,8 @@
+// lib/auth.dart
+
 import 'package:flutter/material.dart';
+
+// screen 
 import 'package:wombat_tracker/screen/auth/login.dart';
 import 'package:wombat_tracker/screen/auth/signup.dart';
 

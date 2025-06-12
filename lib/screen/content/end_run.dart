@@ -1,14 +1,24 @@
+// lib/screen/content/end_run.dart
+
 import 'package:flutter/material.dart';
+
+// package externe 
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:intl/intl.dart';
-import 'package:wombat_tracker/styles.dart';
-import 'package:wombat_tracker/utils/convert_time.dart';
-import 'package:wombat_tracker/utils/network/posts_network.dart';
-import 'package:wombat_tracker/utils/network/stats_network.dart';
-import 'package:wombat_tracker/widget/button_cta.dart';
-import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:geolocator/geolocator.dart';
+
+// styles 
+import 'package:wombat_tracker/styles.dart';
+
+// utils 
+import 'package:wombat_tracker/utils/services/convert_time.dart';
+import 'package:wombat_tracker/utils/network/posts_network.dart';
+import 'package:wombat_tracker/utils/network/stats_network.dart';
+
+// widget 
+import 'package:wombat_tracker/widget/form/button_cta.dart';
+import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
 
 class EndRun extends StatefulWidget {
   final List<LatLng> points;
@@ -80,9 +90,8 @@ class _EndRunState extends State<EndRun> {
 
     try {
       await sendData(dataRun);
-      print("✅ Envoi réussi");
     } catch (e) {
-      print("❌ Envoi échoué : $e");
+      throw Exception("Envoi échoué : $e");
     }
   }
 

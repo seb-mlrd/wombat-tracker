@@ -1,5 +1,9 @@
-import 'package:wombat_tracker/utils/validators.dart';
+// lib/test/utils/validators_test.dart
+
 import 'package:flutter_test/flutter_test.dart';
+
+// utils 
+import 'package:wombat_tracker/utils/services/validators.dart';
 
 void main() {
   group('class Validators', () {

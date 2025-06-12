@@ -1,5 +1,9 @@
+// lib/banner/wombat_banner_screen.dart
+
 import 'package:flutter/material.dart';
-import '../styles.dart';
+
+// styles 
+import '../../styles.dart';
 
 class WombatBannerScreen extends StatelessWidget {
   final bool isLogoActive;
@@ -10,7 +14,6 @@ class WombatBannerScreen extends StatelessWidget {
     return Container(
       height: 154,
       width: double.infinity,
-      // margin: EdgeInsets.only(bottom: 16),
       padding: EdgeInsets.only(top: 16, bottom: 16),
       decoration: BoxDecoration(color: primaryBase),
       child: Row(

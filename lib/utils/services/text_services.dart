@@ -1,3 +1,5 @@
+// lib/utils/services/text_services.dart
+
 class TextServices {
   static String truncate(String text, int maxLength, {String suffix = '...'}) {
     if (text.length <= maxLength) return text;

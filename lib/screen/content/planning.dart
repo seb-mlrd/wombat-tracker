@@ -1,11 +1,15 @@
+// lib/screen/content/planning.dart
+
 import 'package:flutter/material.dart';
-import 'package:wombat_tracker/screen/sequences_screen.dart';
-import 'package:wombat_tracker/styles.dart';
+
+// utils 
 import 'package:wombat_tracker/utils/class/modules.dart';
 import 'package:wombat_tracker/utils/network/modules_network.dart';
+
+// widget 
 import 'package:wombat_tracker/widget/planning/container_sticker_training.dart';
 import 'package:wombat_tracker/widget/planning/title_training.dart';
-import 'package:wombat_tracker/widget/wombat_banner_screen.dart';
+import 'package:wombat_tracker/widget/banner/wombat_banner_screen.dart';
 
 class Planning extends StatefulWidget {
   const Planning({super.key});

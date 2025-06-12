@@ -1,4 +1,8 @@
+// lib/profil/name_user.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import '../../styles.dart';
 
 class NameUser extends StatelessWidget {

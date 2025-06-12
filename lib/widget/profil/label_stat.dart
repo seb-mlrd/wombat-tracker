@@ -1,4 +1,8 @@
+// lib/profil/label_start.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import '../../styles.dart';
 
 class LabelStat extends StatelessWidget {

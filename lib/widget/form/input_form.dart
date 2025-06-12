@@ -1,5 +1,9 @@
+// lib/widget/form/input_form.dart
+
 import 'package:flutter/material.dart';
-import '../styles.dart';
+
+// styles 
+import '../../styles.dart';
 
 class InputForm extends StatefulWidget {
   final String typeInput;

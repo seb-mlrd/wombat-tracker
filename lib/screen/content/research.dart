@@ -1,12 +1,20 @@
+// lib/screen/content/research.dart
+
 import 'package:flutter/material.dart';
+
+// style 
 import 'package:wombat_tracker/styles.dart';
+
+// utils 
 import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
-import 'package:wombat_tracker/utils/text_services.dart';
-import 'package:wombat_tracker/utils/validators.dart';
+import 'package:wombat_tracker/utils/services/text_services.dart';
+import 'package:wombat_tracker/utils/services/validators.dart';
+
+// widget 
 import 'package:wombat_tracker/widget/app_bar_wombat.dart';
 import 'package:wombat_tracker/widget/avatar.dart';
-import 'package:wombat_tracker/widget/input_form.dart';
+import 'package:wombat_tracker/widget/form/input_form.dart';
 
 class Research extends StatefulWidget {
   final List<dynamic> currentUser;
@@ -208,7 +216,7 @@ class _ResearchState extends State<Research> {
                 );
                 disableCallback();
               } catch (e) {
-                print(e);
+                throw Exception("Erreur lors de l'ajout de l'ami: $e");
               }
             },
       child: const Icon(Icons.person_add_alt_1, color: secondaryBase, size: 24),

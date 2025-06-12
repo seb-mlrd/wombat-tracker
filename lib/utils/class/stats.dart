@@ -1,3 +1,5 @@
+// lib/utils/class/stats.dart
+
 class Stats {
   final int id;
   final String time;

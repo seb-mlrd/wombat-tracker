@@ -1,6 +1,14 @@
+// lib/profil/thumbnail_user.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import 'package:wombat_tracker/styles.dart';
-import 'package:wombat_tracker/utils/text_services.dart';
+
+// utils 
+import 'package:wombat_tracker/utils/services/text_services.dart';
+
+// widget 
 import 'package:wombat_tracker/widget/avatar.dart';
 
 class ThumbnailUser extends StatelessWidget {

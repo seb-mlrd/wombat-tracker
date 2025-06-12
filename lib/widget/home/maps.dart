@@ -1,17 +1,19 @@
-// import 'dart:developer';
+// lib/widget/home/maps.dart
+
 import 'dart:async';
 import 'package:flutter/material.dart';
+
+// packge externe
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+
+// utils
 import 'package:wombat_tracker/utils/location_services.dart';
 
 class Maps extends StatefulWidget {
-  // ---------gpt--------------
   final List<LatLng> points;
   final Function(List<LatLng>) onPointsChanged;
-  const Maps({Key? key, required this.points, required this.onPointsChanged})
-    : super(key: key);
-  // ---------gpt--------------
+  const Maps({super.key, required this.points, required this.onPointsChanged});
 
   @override
   State<Maps> createState() => _MapsState();
@@ -27,20 +29,19 @@ class _MapsState extends State<Maps> {
   late LatLng _end;
   LocationData? locationInitialData;
   LocationData? locationFinalData;
-  Set<Marker> _markers = {};
-  Set<Polyline> _polylines = {};
-  // -----gpt-----
-  // final List<LatLng> points = [];
+  final Set<Marker> _markers = {};
+  final Set<Polyline> _polylines = {};
+
   late List<LatLng> points;
-  // -----gpt-----
+
   Timer? _locationUpdateTimer;
   bool run = false;
   @override
   void initState() {
     super.initState();
-    // ---------gpt--------------
+
     points = List.from(widget.points);
-    // ---------gpt--------------
+
     getLocation();
     LocationServices.runReady.addListener(() {
       if (LocationServices.runReady.value) {
@@ -61,9 +62,6 @@ class _MapsState extends State<Maps> {
           newLocation.latitude!.toDouble(),
           newLocation.longitude!.toDouble(),
         );
-        // -----gpt----
-        // addPoint(newPoint);
-        // -----gpt----
 
         setState(() {
           points.add(newPoint);
@@ -77,9 +75,7 @@ class _MapsState extends State<Maps> {
               points: List<LatLng>.from(points),
             ),
           );
-          // -----gpt-----
           widget.onPointsChanged(points);
-          // -----gpt-----
         });
       }
     });
@@ -120,7 +116,6 @@ class _MapsState extends State<Maps> {
     final service = LocationServices();
 
     final locationData = await service.getLocation();
-    print(locationData);
     if (locationData != null) {
       setState(() {
         latitude = locationData.latitude!.toDouble();
@@ -133,7 +128,6 @@ class _MapsState extends State<Maps> {
 
         _markers.add(Marker(markerId: MarkerId("Moi"), position: _center));
       });
-      print(_markers);
     }
   }
 
@@ -187,10 +181,3 @@ class _MapsState extends State<Maps> {
     return locationInitialData;
   }
 }
-
-// pour clear les polylines
-
-// setState(() {
-//   _polylines.clear();
-//   _polylines.add(polyline);
-// });

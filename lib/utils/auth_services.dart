@@ -1,7 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:wombat_tracker/main.dart';
+
+// styles 
 import 'package:wombat_tracker/styles.dart';
+
+// utils 
 import 'package:wombat_tracker/utils/manage_user.dart';
+
+import 'package:wombat_tracker/main.dart';
 
 class AuthServices {
   static Future<void> signup(
@@ -19,8 +24,6 @@ class AuthServices {
       FocusScope.of(context).requestFocus(
         FocusNode(),
       ); // pour retirer le clavier au moment d'envoyer les informations
-      print(confPasswordConfirm);
-      print(confPassword);
       if (confPassword != confPasswordConfirm) {
         // Affiche une erreur
         ScaffoldMessenger.of(context).showSnackBar(
