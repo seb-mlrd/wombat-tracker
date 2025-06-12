@@ -71,21 +71,25 @@ class _ResearchState extends State<Research> {
   Form forSearch() {
     return Form(
       key: _formKey,
-      child: Row(
-        children: [
-          Expanded(
-            child: InputForm(
-              nameController: researchBarController,
-              typeInput: "recherche",
-              methodeValidateInput: (value) => Validators.checkInputEmpty(
-                researchBarController.text,
-                "recherche",
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: InputForm(
+                nameController: researchBarController,
+                typeInput: "recherche",
+                methodeValidateInput: (value) => Validators.checkInputEmpty(
+                  researchBarController.text,
+                  "recherche",
+                ),
+                paddingHorizontal: 1,
               ),
-              paddingHorizontal: 19,
             ),
-          ),
-          buttonSearch(),
-        ],
+            buttonSearch(),
+          ],
+        ),
       ),
     );
   }
@@ -95,7 +99,7 @@ class _ResearchState extends State<Research> {
       style: ElevatedButton.styleFrom(
         shape: CircleBorder(),
         backgroundColor: primaryBase,
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding: EdgeInsets.symmetric(vertical: 15),
       ),
       onPressed: () async {
         if (_formKey.currentState!.validate()) {
@@ -107,7 +111,7 @@ class _ResearchState extends State<Research> {
           });
         }
       },
-      child: const Icon(Icons.search, color: secondaryBase),
+      child: const Icon(Icons.search, color: secondaryBase, size: 32),
     );
   }
 

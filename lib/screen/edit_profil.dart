@@ -93,7 +93,10 @@ class _EditProfilState extends State<EditProfil> {
                       typeInput: "edit-phoone",
                       methodeValidateInput: (value) =>
                           Validators.validatePhone(phoneEditController.text),
-                      defaultValue: widget.profils[0]["phone"] ?? "",
+                      defaultValue:
+                          widget.profils[0]["phone"] == "'NULL'::character"
+                          ? ""
+                          : widget.profils[0]["phone"],
                     ),
                     SizedBox(height: 32),
                     LabelForm(labelName: "Bio"),
@@ -106,7 +109,9 @@ class _EditProfilState extends State<EditProfil> {
                             bioEditController.text,
                             "bio",
                           ),
-                      defaultValue: widget.profils[0]["bio"] ?? "",
+                      defaultValue: widget.profils[0]["bio"] == "NULL"
+                          ? ""
+                          : widget.profils[0]["bio"],
                     ),
                     LabelForm(labelName: "Lien Avatar"),
                     InputForm(

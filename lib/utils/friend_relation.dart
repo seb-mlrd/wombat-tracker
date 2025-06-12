@@ -13,7 +13,7 @@ class FriendRelation {
     var friends = await supabaseClient
         .from('friend-relation')
         .select(
-          "friendId(firstName, lastName, avatar, bio), requesterId(firstName, lastName, avatar, bio)",
+          "friendId(id, firstName, lastName, avatar, bio), requesterId(id, firstName, lastName, avatar, bio)",
         )
         .eq("requesterId", idUser);
     return friends;

@@ -1,30 +1,30 @@
 class Posts {
   final int id;
   final String post;
-  final int idStats;
-  final int idUserWhoPost;
+  final Map idStats;
+  final Map idUserWhoPost;
 
   Posts({
     required this.id,
+    required this.post,
     required this.idStats,
     required this.idUserWhoPost,
-    required this.post,
   });
   Map<String, dynamic> toJson() {
     return {
-      "id": id,
-      "idStats": idStats,
-      "idUserWhoPost": idUserWhoPost,
-      "post": post,
+      "id": this.id,
+      "post": this.post,
+      "idStats": this.idStats,
+      "idUserWhoPost": this.idUserWhoPost,
     };
   }
 
   factory Posts.fromJson(Map<String, dynamic> json) {
     return Posts(
-      idStats: json["idStats"],
-      idUserWhoPost: json["idUserWhoPost"],
       id: json["id"],
       post: json["post"],
+      idStats: json["idStats"],
+      idUserWhoPost: json["idUserWhoPost"],
     );
   }
 }

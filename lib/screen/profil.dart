@@ -57,7 +57,6 @@ class _ProfilState extends State<Profil> {
     setState(() {
       friends = fetchedFriends;
       stats = fetchStats;
-      print(stats);
     });
   }
 
@@ -79,7 +78,11 @@ class _ProfilState extends State<Profil> {
 
                 SizedBox(height: 16),
                 if (profils.isNotEmpty)
-                  UserBio(bio: profils[0]["bio"] ?? "Aucune bio"),
+                  UserBio(
+                    bio: profils[0]["bio"] == "NULL"
+                        ? "Aucune bio"
+                        : profils[0]["bio"],
+                  ),
 
                 Container(
                   width: double.infinity,
@@ -196,9 +199,11 @@ class _ProfilState extends State<Profil> {
                   )
                   .toList()
             : [
-                Text(
-                  "Aucun ami",
-                  style: bodyTextMedium.copyWith(color: tertiary100),
+                Center(
+                  child: Text(
+                    "Aucun ami",
+                    style: bodyTextMedium.copyWith(color: tertiary100),
+                  ),
                 ),
               ],
       ),
@@ -231,7 +236,14 @@ class _ProfilState extends State<Profil> {
       padding: EdgeInsets.symmetric(vertical: 24),
       width: double.infinity,
       decoration: boxDecorationCardProfil(),
-      child: cardStat(stats[0]["speed"], stats[0]["distance"]),
+      child: stats.isNotEmpty
+          ? cardStat(stats[0]["speed"], stats[0]["distance"], stats[0]["time"])
+          : Center(
+              child: Text(
+                "Aucune statistique",
+                style: bodyTextMedium.copyWith(color: tertiary100),
+              ),
+            ),
     );
   }
 
@@ -242,7 +254,7 @@ class _ProfilState extends State<Profil> {
     );
   }
 
-  Center cardStat(double speed, int distance) {
+  Center cardStat(speed, distance, time) {
     return Center(
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -251,7 +263,7 @@ class _ProfilState extends State<Profil> {
           LabelStat(
             pictureLink: "assets/img/time.png",
             textStat: stats.isNotEmpty
-                ? ConvertTime().convertTimeToStringCompressed(stats[0]["time"])
+                ? ConvertTime().convertTimeToStringCompressed(time)
                 : "--:--:--",
           ),
           SizedBox(

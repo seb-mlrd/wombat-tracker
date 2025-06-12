@@ -9,11 +9,13 @@ class UserBio extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: 300,
-      child: Text(
-        bio,
-        style: bodyTextMedium.copyWith(color: tertiary100),
-        maxLines: 5,
-        overflow: TextOverflow.ellipsis,
+      child: Center(
+        child: Text(
+          bio,
+          style: bodyTextMedium.copyWith(color: tertiary100),
+          maxLines: 5,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }

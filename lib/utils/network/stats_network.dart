@@ -1,5 +1,4 @@
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:wombat_tracker/utils/class/stats.dart';
 
 class StatsNetwork {
   final SupabaseClient supabaseClient = Supabase.instance.client;

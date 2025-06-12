@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:wombat_tracker/styles.dart';
-import 'package:wombat_tracker/utils/class/posts.dart';
+import 'package:wombat_tracker/utils/convert_time.dart';
 import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/network/posts_network.dart';
+import 'package:wombat_tracker/utils/text_services.dart';
 import 'package:wombat_tracker/widget/app_bar_wombat.dart';
 import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
 
@@ -15,49 +16,83 @@ class Community extends StatefulWidget {
 }
 
 class _CommunityState extends State<Community> {
-  late Future<List<Posts>> allPostsFuture;
+  List allPostsFriends = [];
+  bool isLoadData = true;
 
-  Future<List<Posts>> loadAllPosts() async {
+  Future<void> loadAllPosts() async {
     final friendsList = await FriendRelation.getFriend(widget.profils[0]["id"]);
-    return await PostsNetwork().loadPostsByIdUsers(
-      widget.profils[0]["id"],
-      friendsList,
-    );
+    try {
+      List responsePosts = await PostsNetwork().loadPostsByIdUsers(
+        widget.profils[0]["id"],
+        friendsList,
+      );
+      setState(() {
+        allPostsFriends = responsePosts;
+        isLoadData = false;
+      });
+    } catch (e) {
+      throw Exception("Erreur lors de la requete des Posts : $e");
+    }
   }
 
   @override
   void initState() {
     super.initState();
-    // allPostsFuture = loadAllPosts();
-    // print(loadAllPosts());
-
-    // print(allPostsFuture);
+    loadAllPosts();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBarWombat(mainTitle: "Communauté"),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(10),
-          child: Column(
-            children: [for (var i = 0; i < 5; i++) templatePostUser()],
+    if (isLoadData) {
+      return const Scaffold(body: Center(child: CircularProgressIndicator()));
+    } else {
+      return SafeArea(
+        child: Scaffold(
+          appBar: AppBarWombat(mainTitle: "Communauté"),
+          body: SingleChildScrollView(
+            padding: const EdgeInsets.all(10),
+            child: allPostsFriends.isNotEmpty
+                ? Column(
+                    children: [
+                      for (var postFriend in allPostsFriends)
+                        templatePostUser(
+                          postFriend.idUserWhoPost["avatar"],
+                          postFriend.idUserWhoPost["firstName"],
+                          postFriend.idUserWhoPost["lastName"],
+                          postFriend.idStats["date"],
+                          postFriend.idStats["time"],
+                          postFriend.idStats["distance"],
+                          postFriend.idStats["speed"],
+                          // postFriend.idStats["post"],
+                        ),
+                    ],
+                  )
+                : Center(child: Text("Aucun post")),
           ),
         ),
-      ),
-    );
+      );
+    }
   }
 
-  Column templatePostUser() {
+  Column templatePostUser(
+    String avatar,
+    String firstName,
+    String lastName,
+    String date,
+    int time,
+    int distance,
+    int speed,
+    // Prochaine intégration la posibilité de laisser des messages avec le poste
+    // String textPost
+  ) {
     return Column(
       children: [
         SizedBox(height: 24),
         ThumbnailUser(
-          avatar: "avatar.png",
-          firstName: "james",
-          lastName: "Ahmaedaly",
-          text: "17/05/2025    17:06",
+          avatar: avatar,
+          firstName: firstName,
+          lastName: lastName,
+          text: date,
           colorText: primaryBase,
           fontText: subSubTitle,
         ),
@@ -65,7 +100,12 @@ class _CommunityState extends State<Community> {
         Image.asset("assets/img/map_test.png"),
         SizedBox(height: 16),
 
-        containerLabelStat("01:12:54", "10 km", "Paris 11ème", "5.4 km/h"),
+        containerLabelStat(
+          ConvertTime().convertTimeToStringCompressed(time),
+          "${TextServices.truncateInt((distance / 1000).toString(), 3)} km",
+          // "Paris 11ème",
+          "${TextServices.truncateInt(speed.toString(), 3)} km/h",
+        ),
         SizedBox(height: 24),
         Divider(thickness: 2),
       ],
@@ -75,7 +115,8 @@ class _CommunityState extends State<Community> {
   Row containerLabelStat(
     String time,
     String distance,
-    String location,
+    // Prochaine intégration
+    // String location,
     String speed,
   ) {
     return Row(
@@ -83,7 +124,7 @@ class _CommunityState extends State<Community> {
       children: [
         labelStatPost("assets/img/time_black.png", time),
         labelStatPost("assets/img/distance_black.png", distance),
-        labelStatPost("assets/img/location_black.png", location),
+        // labelStatPost("assets/img/location_black.png", location),
         labelStatPost("assets/img/speed_black.png", speed),
       ],
     );
