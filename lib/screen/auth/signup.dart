@@ -1,14 +1,17 @@
+// lib/screen/auth/signup.dart
+
 import 'package:flutter/material.dart';
 
+// utils 
 import 'package:wombat_tracker/styles.dart';
 import 'package:wombat_tracker/utils/auth_services.dart';
-import 'package:wombat_tracker/utils/validators.dart';
-// import 'package:wombat_tracker/utils/manage_user.dart';
-import 'package:wombat_tracker/widget/button_cta.dart';
+import 'package:wombat_tracker/utils/services/validators.dart';
 
-import '../../widget/label_form.dart';
-import '../../widget/input_form.dart';
-import '../../widget/wombat_banner.dart';
+// widget 
+import 'package:wombat_tracker/widget/form/button_cta.dart';
+import '../../widget/form/label_form.dart';
+import '../../widget/form/input_form.dart';
+import '../../widget/banner/wombat_banner.dart';
 
 class Signup extends StatefulWidget {
   final VoidCallback onSwitch;

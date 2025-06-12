@@ -1,9 +1,17 @@
+// lib/screen/content/community.dart
+
 import 'package:flutter/material.dart';
+
+// style 
 import 'package:wombat_tracker/styles.dart';
-import 'package:wombat_tracker/utils/convert_time.dart';
+
+// utils 
+import 'package:wombat_tracker/utils/services/convert_time.dart';
 import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/network/posts_network.dart';
-import 'package:wombat_tracker/utils/text_services.dart';
+import 'package:wombat_tracker/utils/services/text_services.dart';
+
+// widget 
 import 'package:wombat_tracker/widget/app_bar_wombat.dart';
 import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
 

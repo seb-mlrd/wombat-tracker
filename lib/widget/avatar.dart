@@ -1,4 +1,8 @@
+// lib/widget/avatar.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import '../styles.dart';
 
 class Avatar extends StatelessWidget {

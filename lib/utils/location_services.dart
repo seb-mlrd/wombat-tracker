@@ -1,3 +1,5 @@
+// lib/utils/location_services.dart
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:location/location.dart';
@@ -35,9 +37,6 @@ class LocationServices {
       _serviceEnabled = await _location.serviceEnabled();
       if (!_serviceEnabled) {
         _serviceEnabled = await _location.requestService();
-        if (!_serviceEnabled) {
-          print("Le service de localisation est désactivé.");
-        }
       }
     } on PlatformException catch (e) {
       print("Erreur de service de localisation : ${e.code} - ${e.message}");
@@ -54,24 +53,6 @@ class LocationServices {
     }
     return null;
   }
-
-  // Future<LocationData?> getLocation() async {
-  //   print("--------------");
-  //   if (await _checkPermission()) {
-  //     try {
-  //       final locationData = await _location.getLocation();
-  //       print(
-  //         "📍 Position récupérée : ${locationData.latitude}, ${locationData.longitude}",
-  //       );
-  //       return locationData;
-  //     } catch (e) {
-  //       print("❌ Erreur lors de la récupération de la position : $e");
-  //     }
-  //   } else {
-  //     print("❌ Permission de localisation refusée");
-  //   }
-  //   return null;
-  // }
 
   Future<void> setInitialLocation() async {
     locationInitialData = await getLocation();

@@ -1,4 +1,8 @@
+// lib/planning/description_sticker.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import 'package:wombat_tracker/styles.dart';
 
 class DescriptionStickerTraining extends StatelessWidget {

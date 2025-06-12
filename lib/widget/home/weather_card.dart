@@ -1,6 +1,14 @@
+// lib/widget/home/weather_card.dart
+
 import 'package:flutter/material.dart';
+
+// packge externe
 import 'package:weather/weather.dart';
+
+// secretKey 
 import 'package:wombat_tracker/secret/open_weather_api_secret.dart';
+
+// styles 
 import 'package:wombat_tracker/styles.dart';
 
 class WeatherCard extends StatefulWidget {
@@ -22,8 +30,7 @@ class _WeatherCardState extends State<WeatherCard> {
     super.initState();
     initialLatLon();
     initWeather();
-    // getLocationLocal();
-    // print("⛅");
+
   }
 
   void initialLatLon() {
@@ -41,7 +48,7 @@ class _WeatherCardState extends State<WeatherCard> {
         });
       });
     } catch (e) {
-      print("error api weather card : $e");
+      throw Exception("error api weather card : $e");
     }
   }
 

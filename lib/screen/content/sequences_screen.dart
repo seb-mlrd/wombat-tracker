@@ -1,6 +1,12 @@
+// lib/screen/content/sequences_screen.dart
+
 import 'package:flutter/material.dart';
+
+// utils 
 import 'package:wombat_tracker/utils/class/sequences.dart';
 import 'package:wombat_tracker/utils/network/sequences_network.dart';
+
+// widget 
 import 'package:wombat_tracker/widget/planning/container_sticker_training.dart';
 import 'package:wombat_tracker/widget/planning/title_training.dart';
 

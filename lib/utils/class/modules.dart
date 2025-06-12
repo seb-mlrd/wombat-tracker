@@ -1,3 +1,5 @@
+// lib/utils/class/modules.dart
+
 class Modules {
   final int id;
   final String titleModule;
@@ -13,10 +15,10 @@ class Modules {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "titleModule": this.titleModule,
-      "objectif": this.objectif,
-      "materiel": this.materiel,
+      "id": id,
+      "titleModule": titleModule,
+      "objectif": objectif,
+      "materiel": materiel,
     };
   }
 

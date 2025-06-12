@@ -1,3 +1,5 @@
+// lib/utils/class/posts.dart
+
 class Posts {
   final int id;
   final String post;
@@ -12,10 +14,10 @@ class Posts {
   });
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "post": this.post,
-      "idStats": this.idStats,
-      "idUserWhoPost": this.idUserWhoPost,
+      "id": id,
+      "post": post,
+      "idStats": idStats,
+      "idUserWhoPost": idUserWhoPost,
     };
   }
 

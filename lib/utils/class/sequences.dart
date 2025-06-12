@@ -1,3 +1,5 @@
+// lib/utils/class/sequences.dart
+
 class Sequences {
   final int id;
   final String titleSequences;
@@ -17,12 +19,12 @@ class Sequences {
 
   Map<String, dynamic> toJson() {
     return {
-      "id": this.id,
-      "titleSequences": this.titleSequences,
-      "descriptionSequences": this.descriptionSequences,
-      "duration": this.duration,
-      "idModule": this.idModule,
-      "numberOfCircuit": this.numberOfCircuit,
+      "id": id,
+      "titleSequences": titleSequences,
+      "descriptionSequences": descriptionSequences,
+      "duration": duration,
+      "idModule": idModule,
+      "numberOfCircuit": numberOfCircuit,
     };
   }
 

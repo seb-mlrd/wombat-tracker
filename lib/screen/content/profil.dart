@@ -1,29 +1,29 @@
-// profil.dart
+// lib/screen/content/profil.dart
+
 // package
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:wombat_tracker/screen/edit_profil.dart';
-
-// file
-// import 'package:wombat_tracker/main.dart';
+import 'package:wombat_tracker/screen/content/edit_profil.dart';
 
 // style
 import 'package:wombat_tracker/styles.dart';
+
+// utils 
 import 'package:wombat_tracker/utils/auth_services.dart';
-import 'package:wombat_tracker/utils/convert_time.dart';
+import 'package:wombat_tracker/utils/services/convert_time.dart';
 import 'package:wombat_tracker/utils/friend_relation.dart';
 import 'package:wombat_tracker/utils/manage_user.dart';
 import 'package:wombat_tracker/utils/network/stats_network.dart';
-import 'package:wombat_tracker/utils/text_services.dart';
+import 'package:wombat_tracker/utils/services/text_services.dart';
 
 // widget
 import 'package:wombat_tracker/widget/avatar.dart';
-import 'package:wombat_tracker/widget/button_cta.dart';
+import 'package:wombat_tracker/widget/form/button_cta.dart';
 import 'package:wombat_tracker/widget/profil/thumbnail_user.dart';
-import '../widget/profil/name_user.dart';
-import '../widget/profil/number_stick.dart';
-import '../widget/profil/user_bio.dart';
-import '../widget/profil/label_stat.dart';
+import '../../widget/profil/name_user.dart';
+import '../../widget/profil/number_stick.dart';
+import '../../widget/profil/user_bio.dart';
+import '../../widget/profil/label_stat.dart';
 
 class Profil extends StatefulWidget {
   final User? user;

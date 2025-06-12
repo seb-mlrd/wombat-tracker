@@ -1,3 +1,6 @@
+// lib/utils/network/sequences_network.dart
+
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:wombat_tracker/utils/class/sequences.dart';
 

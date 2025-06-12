@@ -1,9 +1,14 @@
+// lib/main.dart
+
 import 'package:flutter/material.dart';
-// import 'package:wombat_tracker/auth.dart';
-// import 'package:wombat_tracker/content.dart';
-import 'package:wombat_tracker/screen/auth/is_auth.dart';
-// import 'package:wombat_tracker/styles.dart';
+
+// screen 
+import 'package:wombat_tracker/is_auth.dart';
+
+// secretKey 
 import 'secret/supabase_secret_key.dart';
+
+// supabase 
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 Future<void> main() async {

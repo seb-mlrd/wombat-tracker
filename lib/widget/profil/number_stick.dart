@@ -1,4 +1,8 @@
+// lib/profil/number_stick.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import '../../styles.dart';
 
 class NumberStick extends StatelessWidget {

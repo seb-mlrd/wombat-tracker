@@ -1,3 +1,5 @@
+// lib/utils/network/stats_network.dart
+
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class StatsNetwork {

@@ -1,4 +1,8 @@
+// lib/widget/app_bar_wombat.dart
+
 import 'package:flutter/material.dart';
+
+// styles 
 import 'package:wombat_tracker/styles.dart';
 
 class AppBarWombat extends StatelessWidget implements PreferredSizeWidget {

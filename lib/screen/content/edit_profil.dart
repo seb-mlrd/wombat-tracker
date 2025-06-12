@@ -1,13 +1,23 @@
+// lib/screen/content/edit_profil.dart
+
 import 'package:flutter/material.dart';
+
+// screen 
 import 'package:wombat_tracker/main.dart';
+
+// styles 
 import 'package:wombat_tracker/styles.dart';
+
+// utils 
 import 'package:wombat_tracker/utils/manage_user.dart';
-import 'package:wombat_tracker/utils/validators.dart';
+import 'package:wombat_tracker/utils/services/validators.dart';
+
+// widget 
 import 'package:wombat_tracker/widget/avatar.dart';
-import 'package:wombat_tracker/widget/button_cta.dart';
-import 'package:wombat_tracker/widget/input_form.dart';
-import 'package:wombat_tracker/widget/label_form.dart';
-import '../widget/wombat_banner_screen.dart';
+import 'package:wombat_tracker/widget/form/button_cta.dart';
+import 'package:wombat_tracker/widget/form/input_form.dart';
+import 'package:wombat_tracker/widget/form/label_form.dart';
+import '../../widget/banner/wombat_banner_screen.dart';
 
 class EditProfil extends StatefulWidget {
   final List<dynamic> profils;
@@ -60,6 +70,7 @@ class _EditProfilState extends State<EditProfil> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    // input + label nom  
                     LabelForm(labelName: "Nom"),
                     InputForm(
                       key: Key("nameEditor"),
@@ -73,6 +84,8 @@ class _EditProfilState extends State<EditProfil> {
                       defaultValue: widget.profils[0]["firstName"],
                     ),
                     SizedBox(height: 32),
+
+                    // input + label Prenom
                     LabelForm(labelName: "Prenom"),
                     InputForm(
                       key: Key("lastNameEditor"),
@@ -86,6 +99,8 @@ class _EditProfilState extends State<EditProfil> {
                       defaultValue: widget.profils[0]["lastName"],
                     ),
                     SizedBox(height: 32),
+
+                    // input + label Téléphone
                     LabelForm(labelName: "Téléphone"),
                     InputForm(
                       key: Key("phoneEditor"),
@@ -99,6 +114,8 @@ class _EditProfilState extends State<EditProfil> {
                           : widget.profils[0]["phone"],
                     ),
                     SizedBox(height: 32),
+
+                    // input + label Bio
                     LabelForm(labelName: "Bio"),
                     InputForm(
                       key: Key("bioEditor"),
@@ -113,6 +130,8 @@ class _EditProfilState extends State<EditProfil> {
                           ? ""
                           : widget.profils[0]["bio"],
                     ),
+
+                    // input + label Avatar
                     LabelForm(labelName: "Lien Avatar"),
                     InputForm(
                       key: Key("avatarEditor"),
@@ -125,6 +144,7 @@ class _EditProfilState extends State<EditProfil> {
                           ),
                       defaultValue: widget.profils[0]["avatar"] ?? "",
                     ),
+                    // bouton submit
                     ButtonCta(
                       keyButton: "buttonEdit",
                       labelInput: "Enregistrer",

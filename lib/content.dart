@@ -1,12 +1,22 @@
+// lib/content.dart
+
 import 'package:flutter/material.dart';
+
+// package externe
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+// style
 import 'package:wombat_tracker/styles.dart';
+
+// utils
 import 'package:wombat_tracker/utils/manage_user.dart';
-import 'screen/home.dart';
-import 'screen/community.dart';
-import 'screen/planning.dart';
-import 'screen/profil.dart';
-import 'screen/research.dart';
+
+// screen
+import 'screen/content/home.dart';
+import 'screen/content/community.dart';
+import 'screen/content/planning.dart';
+import 'screen/content/profil.dart';
+import 'screen/content/research.dart';
 
 class Content extends StatefulWidget {
   const Content({super.key});
@@ -38,7 +48,7 @@ class _ContentState extends State<Content> {
         isLoading = false;
       });
     } catch (e) {
-      print(e);
+      throw Exception("Erreur lors de la réceptions du profil : $e");
     }
   }
 

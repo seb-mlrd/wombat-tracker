@@ -1,9 +1,17 @@
+// lib/planning/continer_sticker.dart
+
 import 'package:flutter/material.dart';
-import 'package:wombat_tracker/screen/sequences_screen.dart';
+
+// styles 
 import 'package:wombat_tracker/styles.dart';
+
+// widget 
 import 'package:wombat_tracker/widget/planning/description_sticker_training.dart';
 import 'package:wombat_tracker/widget/planning/time_sticker_training.dart';
 import 'package:wombat_tracker/widget/planning/title_sticker_training.dart';
+
+// screen 
+import 'package:wombat_tracker/screen/content/sequences_screen.dart';
 
 class ContainerStickerTraining extends StatelessWidget {
   const ContainerStickerTraining({

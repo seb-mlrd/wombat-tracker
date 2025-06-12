@@ -1,3 +1,5 @@
+// lib/utils/manage_user.dart
+
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import '../main.dart';
@@ -21,8 +23,6 @@ class ManageUser {
       data: {'firstName': confName, 'lastName': confLastName},
     );
 
-    // final Session? session = res.session;
-    // final User? user = res.user;
   }
 
   static Future<List> getProfil() async {
@@ -67,17 +67,14 @@ class ManageUser {
     GlobalKey<FormState> formKey,
   ) async {
     if (formKey.currentState!.validate()) {
-      print(data);
       try {
         await supabaseClient
             .from('profil')
             .update(data)
             .eq('userUuid', currentUser!.id);
       } catch (e) {
-        print(e);
+        throw Exception("Erreur lors de l'édit de l'utilisateur : $e");
       }
-
-      /// appelle de la méthode spuabase pour modifier un user
     }
   }
 }
